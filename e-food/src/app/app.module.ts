@@ -1,3 +1,4 @@
+import { CartModule } from './cart/cart.module';
 import { FooterModule } from './footer/footer.module';
 import { HeaderModule } from './header/header.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     BrowserAnimationsModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    CartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

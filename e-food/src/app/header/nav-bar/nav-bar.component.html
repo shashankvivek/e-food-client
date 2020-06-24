@@ -5,7 +5,7 @@
   />
 
   <button mat-button [routerLink]="['/']">E-Food</button>
-  <button mat-button [matMenuTriggerFor]="menu">Fruits</button>
+  <button mat-button [matMenuTriggerFor]="menu">Fruits <mat-icon>keyboard_arrow_down</mat-icon></button>
   <mat-menu #menu="matMenu">
     <!-- remove hard coding -->
     <button mat-menu-item [routerLink]="['/products', 'apples']">
@@ -20,7 +20,7 @@
     </button>
   </mat-menu>
 
-  <button class="cart-btn" mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="warn">
+  <button (click)="openCartModal()" class="cart-btn" mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="warn">
     <mat-icon >shopping_cart</mat-icon>Cart
   </button>
 </mat-toolbar>

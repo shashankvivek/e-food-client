@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     height: 100%;
-    padding: 0;
+    padding: 50px;
     margin: 0;
     display: -webkit-box;
     display: -moz-box;
@@ -13,10 +13,11 @@
     justify-content: left;
 }
 
-.prod-container>div {
-    width: 250px;
+.grids {
+    width: 300px;
     margin: 10px;
     text-align: center;
     font-size: 30px;
+    height: 500px;
 }
 
