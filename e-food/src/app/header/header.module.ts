@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { SharedKernelModule } from '../shared-kernel/shared-kernel.module';
   declarations: [NavBarComponent],
   imports: [
     CommonModule,
-    SharedKernelModule
+    SharedKernelModule,
+    RouterModule
   ],
   exports: [NavBarComponent]
 })

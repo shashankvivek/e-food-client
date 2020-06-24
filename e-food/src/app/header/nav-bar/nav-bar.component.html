@@ -6,7 +6,7 @@
     <button mat-button
             [matMenuTriggerFor]="menu">Fruits</button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item>Apples</button>
+        <button mat-menu-item [routerLink]="['/products','apple']">Apples</button>
         <button mat-menu-item>Bananas</button>
         <button mat-menu-item>Pears</button>
         <button mat-menu-item>Oranges</button>

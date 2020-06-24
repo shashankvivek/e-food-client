@@ -3,6 +3,6 @@ import { Routes } from '@angular/router';
 
 export const productRoutes: Routes = [
     {
-        path: '' , component: ProductListComponent
+        path: ':id' , component: ProductListComponent
     }
 ];
