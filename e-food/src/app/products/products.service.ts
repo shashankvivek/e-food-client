@@ -39,6 +39,61 @@ export class ProductsService {
       ]
     };
 
+    const bananas: IProductGroup = {
+      grpSkuId: 'banana',
+      products: [
+        {
+          grpSkuId: 'banana',
+          skuId: 'banana-1',
+          title: 'Banana',
+          description: 'Its a Yummy Yellow Apple',
+          url:
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+          unitPriceL: 10,
+          currency: '$',
+          offerMessage: '',
+          isOutOfStock: false,
+          maxQuantity: 10,
+        }
+      ]
+    };
+    const pears: IProductGroup = {
+      grpSkuId: 'pear',
+      products: [
+        {
+          grpSkuId: 'pear',
+          skuId: 'pear-1',
+          title: 'Pears',
+          description: 'Its a Pear',
+          url:
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+          unitPriceL: 10,
+          currency: '$',
+          offerMessage: '',
+          isOutOfStock: false,
+          maxQuantity: 10,
+        }
+      ]
+    };
+    const oranges: IProductGroup = {
+      grpSkuId: 'orange',
+      products: [
+        {
+          grpSkuId: 'orange',
+          skuId: 'orange-1',
+          title: 'Oranges',
+          description: 'Its a Tangy orange',
+          url:
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+          unitPriceL: 10,
+          currency: '$',
+          offerMessage: '',
+          isOutOfStock: false,
+          maxQuantity: 10,
+        }
+      ]
+    };
+
     if (grpId === 'apple') {
         return of(apples);
     }

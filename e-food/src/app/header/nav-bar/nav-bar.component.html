@@ -6,9 +6,10 @@
     <button mat-button
             [matMenuTriggerFor]="menu">Fruits</button>
     <mat-menu #menu="matMenu">
+        <!-- remove hard coding -->
         <button mat-menu-item [routerLink]="['/products','apple']">Apples</button>
-        <button mat-menu-item>Bananas</button>
-        <button mat-menu-item>Pears</button>
-        <button mat-menu-item>Oranges</button>
+        <button mat-menu-item [routerLink]="['/products','banana']">Bananas</button>
+        <button mat-menu-item [routerLink]="['/products','pear']">Pears</button>
+        <button mat-menu-item [routerLink]="['/products','orange']">Oranges</button>
     </mat-menu>
 </mat-toolbar>
