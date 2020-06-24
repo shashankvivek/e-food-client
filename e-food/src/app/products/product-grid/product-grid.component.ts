@@ -1,3 +1,4 @@
+import { CartService } from './../../cart/cart.service';
 import { IProduct } from './../product.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -9,9 +10,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductGridComponent implements OnInit {
 
   @Input() product: IProduct;
-  constructor() { }
+
+  // disable add to cart if the prod is already in cart
+  constructor(public cartSvc: CartService) { }
 
   ngOnInit() {
+  }
+
+  addToCart(item: IProduct) {
+    this.cartSvc.addProductToCart(item);
   }
 
 }
