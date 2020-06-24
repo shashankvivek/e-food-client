@@ -48,12 +48,13 @@ export class ProductsService {
           title: 'Banana',
           description: 'Its a Yummy Yellow Apple',
           url:
-            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/banana.jpg',
           unitPriceL: 10,
           currency: '$',
           offerMessage: '',
           isOutOfStock: false,
           maxQuantity: 10,
+          // unit : 'dozen'
         }
       ]
     };
@@ -66,7 +67,7 @@ export class ProductsService {
           title: 'Pears',
           description: 'Its a Pear',
           url:
-            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/pears.jpg',
           unitPriceL: 10,
           currency: '$',
           offerMessage: '',
@@ -84,7 +85,7 @@ export class ProductsService {
           title: 'Oranges',
           description: 'Its a Tangy orange',
           url:
-            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/apple-1.png',
+            'https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/oranges.jpg',
           unitPriceL: 10,
           currency: '$',
           offerMessage: '',
@@ -94,8 +95,14 @@ export class ProductsService {
       ]
     };
 
-    if (grpId === 'apple') {
+    if (grpId === 'apples') {
         return of(apples);
+    } else if (grpId === 'bananas') {
+        return of(bananas);
+    } else if (grpId === 'pears') {
+      return of(pears);
+    } else if ( grpId === 'oranges') {
+      return of(oranges);
     }
   }
 }
