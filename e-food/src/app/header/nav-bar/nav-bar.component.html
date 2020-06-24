@@ -1,0 +1,14 @@
+<mat-toolbar class="mat-primary">
+    <img src="../../../assets/diet.png"
+         class="logo">
+
+    <button mat-button>E-Food</button>
+    <button mat-button
+            [matMenuTriggerFor]="menu">Fruits</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>Apples</button>
+        <button mat-menu-item>Bananas</button>
+        <button mat-menu-item>Pears</button>
+        <button mat-menu-item>Oranges</button>
+    </mat-menu>
+</mat-toolbar>
