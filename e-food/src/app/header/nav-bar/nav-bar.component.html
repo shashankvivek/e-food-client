@@ -1,15 +1,26 @@
-<mat-toolbar class="mat-primary">
-    <img src="https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/diet.png"
-         class="logo">
+<mat-toolbar class="mat-primary nav-bar">
+  <img
+    src="https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/diet.png"
+    class="logo"
+  />
 
-    <button mat-button>E-Food</button>
-    <button mat-button
-            [matMenuTriggerFor]="menu">Fruits</button>
-    <mat-menu #menu="matMenu">
-        <!-- remove hard coding -->
-        <button mat-menu-item [routerLink]="['/products','apples']">Apples</button>
-        <button mat-menu-item [routerLink]="['/products','bananas']">Bananas</button>
-        <button mat-menu-item [routerLink]="['/products','pears']">Pears</button>
-        <button mat-menu-item [routerLink]="['/products','oranges']">Oranges</button>
-    </mat-menu>
+  <button mat-button [routerLink]="['/']">E-Food</button>
+  <button mat-button [matMenuTriggerFor]="menu">Fruits</button>
+  <mat-menu #menu="matMenu">
+    <!-- remove hard coding -->
+    <button mat-menu-item [routerLink]="['/products', 'apples']">
+      Apples
+    </button>
+    <button mat-menu-item [routerLink]="['/products', 'bananas']">
+      Bananas
+    </button>
+    <button mat-menu-item [routerLink]="['/products', 'pears']">Pears</button>
+    <button mat-menu-item [routerLink]="['/products', 'oranges']">
+      Oranges
+    </button>
+  </mat-menu>
+
+  <button class="cart-btn" mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="warn">
+    <mat-icon >shopping_cart</mat-icon>Cart
+  </button>
 </mat-toolbar>
