@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SharedKernelModule } from '../shared-kernel/shared-kernel.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -12,7 +13,8 @@ import { SharedKernelModule } from '../shared-kernel/shared-kernel.module';
   imports: [
     CommonModule,
     SharedKernelModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   exports: [NavBarComponent]
 })

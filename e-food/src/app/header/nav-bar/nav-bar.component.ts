@@ -1,3 +1,4 @@
+import { HeaderService, Category } from './../header.service';
 import { IProduct } from './../../products/product.model';
 import { CartService } from './../../cart/cart.service';
 import { MenuModalComponent } from './../../cart/menu-modal/menu-modal.component';
@@ -10,12 +11,19 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-
   cartItems: IProduct[] = [];
-  constructor(public dialog: MatDialog, public cartSvc: CartService) {}
+  menuItems: Category[] = [];
+  constructor(
+    public dialog: MatDialog,
+    public cartSvc: CartService,
+    public headerSvc: HeaderService
+  ) {}
 
   ngOnInit() {
-    this.cartSvc.getCartItems().subscribe(items => {
+    this.headerSvc.getMenuItems().subscribe((items) => {
+      this.menuItems = items;
+    });
+    this.cartSvc.getCartItems().subscribe((items) => {
       this.cartItems = items;
     });
   }
@@ -23,7 +31,7 @@ export class NavBarComponent implements OnInit {
   openCartModal() {
     const dialogRef = this.dialog.open(MenuModalComponent, {
       width: '500px',
-      height: '500px'
+      height: '500px',
     });
   }
 }

@@ -1,0 +1,1 @@
+create interceptor to switch between local and hosted services

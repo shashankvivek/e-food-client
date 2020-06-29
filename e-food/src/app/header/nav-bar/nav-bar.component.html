@@ -5,20 +5,17 @@
   />
 
   <button mat-button [routerLink]="['/']">E-Food</button>
-  <button mat-button [matMenuTriggerFor]="menu">Fruits <mat-icon>keyboard_arrow_down</mat-icon></button>
-  <mat-menu #menu="matMenu">
-    <!-- remove hard coding -->
-    <button mat-menu-item [routerLink]="['/products', 'apples']">
-      Apples
-    </button>
-    <button mat-menu-item [routerLink]="['/products', 'bananas']">
-      Bananas
-    </button>
-    <button mat-menu-item [routerLink]="['/products', 'pears']">Pears</button>
-    <button mat-menu-item [routerLink]="['/products', 'oranges']">
-      Oranges
-    </button>
-  </mat-menu>
+  <ng-container *ngFor="let category of menuItems">
+    <button mat-button [matMenuTriggerFor]="menu">{{category.bcName}} <mat-icon>keyboard_arrow_down</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <!-- remove hard coding -->
+      <ng-container *ngFor="let subCategory of category.subCategories">
+        <button  mat-menu-item [routerLink]="['/products', subCategory.scId]">
+          {{subCategory.scName}}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </ng-container>
 
   <button (click)="openCartModal()" class="cart-btn" mat-raised-button matBadge="{{cartItems.length}}" matBadgePosition="before" matBadgeColor="warn">
     <mat-icon >shopping_cart</mat-icon>Cart

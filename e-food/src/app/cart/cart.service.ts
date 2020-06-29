@@ -15,6 +15,7 @@ export class CartService {
 
   addProductToCart(item: IProduct) {
     // make a call to server and then get updated cart
+    // consider price change in sync with Products
     this.cartItems.push(item);
     this.cartItems$.next(this.cartItems);
   }

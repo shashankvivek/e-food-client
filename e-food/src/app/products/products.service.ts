@@ -95,13 +95,13 @@ export class ProductsService {
       ]
     };
 
-    if (grpId === 'apples') {
+    if (grpId === '1') {
         return of(apples);
-    } else if (grpId === 'bananas') {
+    } else if (grpId === '2') {
         return of(bananas);
-    } else if (grpId === 'pears') {
+    } else if (grpId === '3') {
       return of(pears);
-    } else if ( grpId === 'oranges') {
+    } else if ( grpId === '4') {
       return of(oranges);
     }
   }
