@@ -1,17 +1,15 @@
 export interface IProduct {
-  grpSkuId: string;
-  skuId: string;
-  title: string;
-  description: string;
-  url: string;
-  unitPriceL: number;
+  bcId: number;
   currency: string;
-  offerMessage: string;
-  isOutOfStock: boolean;
-  maxQuantity: number;
+  description: string;
+  imageUrl: string;
+  name: string;
+  productId: number;
+  scId: number;
+  unitPrice: number;
 }
 
-export interface IProductGroup {
-    grpSkuId: string;
-    products: IProduct[];
-}
+// export interface IProductGroup {
+//     grpSkuId: string;
+//     products: IProduct[];
+// }

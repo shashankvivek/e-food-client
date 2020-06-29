@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
           switchMap((params) => this.prodSvc.getProductsByGroupId(params.id))
         )
         .subscribe((response) => {
-          this.products = response.products;
+          this.products = response;
         })
     );
   }
