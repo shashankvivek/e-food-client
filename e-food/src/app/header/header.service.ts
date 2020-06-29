@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,7 +20,7 @@ export class HeaderService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getMenuItems(): Observable<Category[]> {
+  getMenuItems(): Observable<any> {
     return this.httpClient.get<Category[]>('http://127.0.0.1:8080/categories');
   }
 }
