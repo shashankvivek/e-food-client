@@ -21,6 +21,6 @@ export class HeaderService {
   constructor(private httpClient: HttpClient) {}
 
   getMenuItems(): Observable<any> {
-    return this.httpClient.get<Category[]>('http://127.0.0.1:8080/categories');
+    return this.httpClient.get<Category[]>('/categories');
   }
 }
