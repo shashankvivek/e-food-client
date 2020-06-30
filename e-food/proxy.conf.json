@@ -1,6 +1,10 @@
 {
-    "/categories": {
-      "target": "http://127.0.0.1:8080",
-      "secure": false
-    }
+  "/categories": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false
+  },
+  "/productListBySubCategory/*": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false
+  }
 }
