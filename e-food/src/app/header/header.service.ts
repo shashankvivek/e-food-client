@@ -1,3 +1,4 @@
+import { ISuccessResponse } from './../shared-kernel/shared.model';
 import { switchMap } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -46,6 +47,10 @@ export class HeaderService {
     );
   }
 
+  getCartItemEvent() {
+    return this.cartItems$.asObservable(); ;
+  }
+
   updateCart(event: IAddedToCartEvent): void {
     const newItem: ICartItem = {
       productId: event.product.productId,
@@ -54,17 +59,33 @@ export class HeaderService {
       unitPrice: event.product.unitPrice,
       imageUrl: event.product.imageUrl
     };
-    this.pushItem(newItem);
+    this.pushToCart(newItem);
   }
 
-  private pushItem(newItem: ICartItem) {
+  private pushToCart(newItem: ICartItem) {
     this.cartItems.push(newItem);
+    this.cartItems$.next(this.cartItems);
+  }
+
+  private removeFromCart(productId: number) {
+    const index = this.cartItems.findIndex( item => item.productId === productId);
+    if (index > -1 ) {
+      this.cartItems.splice(index, 1);
+    }
     this.cartItems$.next(this.cartItems);
   }
 
   addGuestSessionInfo(): Observable<any> {
     return this.httpClient.post('/sessionInfo', {
       extraInfo: ''
+    });
+  }
+
+  removeItemFromCart(productId: number) {
+    this.httpClient.delete<ISuccessResponse>('/cart?productId=' + productId).subscribe(response => {
+      if (response.success) {
+        this.removeFromCart(productId);
+      }
     });
   }
 

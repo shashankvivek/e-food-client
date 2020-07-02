@@ -37,8 +37,8 @@ export class NavBarComponent implements OnInit {
   openCartModal() {
     this.dialog.open(CartPreviewComponent, {
       width: '500px',
-      height: '500px',
-      data:  this.cartItems
+      height: '500px'
+      // data:  this.cartItems
     });
   }
 }

@@ -1,3 +1,4 @@
+import { HeaderService } from './../header.service';
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { ICartItem } from '../header.service';
 import {
@@ -8,6 +9,7 @@ import {
 } from '@angular/material';
 
 interface ICartPreview {
+  productId: number;
   name: string;
   image: string;
   quantity: number;
@@ -21,30 +23,41 @@ interface ICartPreview {
 })
 export class CartPreviewComponent implements OnInit {
   dataSource: MatTableDataSource<ICartPreview>;
-  displayedColumns: string[] = ['image', 'name', 'quantity', 'cost'];
+  displayedColumns: string[] = ['image', 'name', 'quantity', 'cost' , 'remove'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   maxItemToShow = [6];
+  items: ICartItem[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public items: ICartItem[],
+    // @Inject(MAT_DIALOG_DATA) public items: ICartItem[],
+    public headerSvc: HeaderService,
     public dialogRef: MatDialogRef<CartPreviewComponent>
   ) {}
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<ICartPreview>(
-      this.items.map((item) => {
-        return {
-          name: item.productName,
-          image: item.imageUrl,
-          quantity: item.quantity,
-          cost: item.quantity * item.unitPrice,
-        };
-      })
-    );
-    this.dataSource.paginator = this.paginator;
+    this.headerSvc.getCartItemEvent().subscribe((items) => {
+      console.log(items);
+      this.items = items;
+      this.dataSource = new MatTableDataSource<ICartPreview>(
+        this.items.map((item) => {
+          return {
+            productId: item.productId,
+            name: item.productName,
+            image: item.imageUrl,
+            quantity: item.quantity,
+            cost: item.quantity * item.unitPrice,
+          };
+        })
+      );
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   closeCart() {
     this.dialogRef.close();
+  }
+
+  removeItem(id: number) {
+    this.headerSvc.removeItemFromCart(id);
   }
 }

@@ -1,8 +1,8 @@
+import { ISuccessResponse } from './../shared-kernel/shared.model';
 import {
   IProduct,
   IAddedToCartEvent,
-  IAddToCartRequest,
-  IAddedCartResponse,
+  IAddToCartRequest
 } from './product.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
@@ -23,11 +23,11 @@ export class ProductsService {
     );
   }
 
-  addItemToCart(params: IAddedToCartEvent): Observable<IAddedCartResponse> {
+  addItemToCart(params: IAddedToCartEvent): Observable<ISuccessResponse> {
     const payload: IAddToCartRequest = {
       productId: params.product.productId,
       quantity: params.quantity,
     };
-    return this.http.post<IAddedCartResponse>('/cart', payload);
+    return this.http.post<ISuccessResponse>('/cart', payload);
   }
 }

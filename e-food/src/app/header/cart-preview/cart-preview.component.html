@@ -23,6 +23,13 @@
         <mat-cell *matCellDef="let element"> {{ element.cost }} </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+          <button mat-button (click)="removeItem(element.productId)"><mat-icon>delete</mat-icon></button>
+         </mat-cell>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>

@@ -7,21 +7,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CartService {
 
-  cartItems: IProduct[] = [];
+  // cartItems: IProduct[] = [];
 
-  cartItems$ = new BehaviorSubject<IProduct[]>([]);
+  // cartItems$ = new BehaviorSubject<IProduct[]>([]);
 
-  constructor() { }
+  // constructor() { }
 
-  addProductToCart(item: IProduct) {
-    this.cartItems.push(item);
-    this.cartItems$.next(this.cartItems);
-  }
+  // addProductToCart(item: IProduct) {
+  //   this.cartItems.push(item);
+  //   this.cartItems$.next(this.cartItems);
+  // }
 
 
 
-  getCartItemsAddedEvent(): Observable<IProduct[]> {
-    return this.cartItems$.asObservable();
-  }
+  // getCartItemsAddedEvent(): Observable<IProduct[]> {
+  //   return this.cartItems$.asObservable();
+  // }
 
 }

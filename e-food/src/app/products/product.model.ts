@@ -19,7 +19,3 @@ export interface IAddToCartRequest {
   quantity: number;
 }
 
-export interface IAddedCartResponse {
-  success: boolean;
-  message: string;
-}
