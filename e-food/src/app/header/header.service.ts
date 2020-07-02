@@ -15,12 +15,20 @@ export interface Category {
   subCategories: SubCategory[];
 }
 
+export interface ICartItemCountResponse {
+  count: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class HeaderService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getMenuItems(): Observable<any> {
+  getMenuItems(): Observable<Category[]> {
     return this.httpClient.get<Category[]>('/categories');
+  }
+
+  getCartItemCount(): Observable<ICartItemCountResponse> {
+    return this.httpClient.get<ICartItemCountResponse>('/cartItemCount');
   }
 }

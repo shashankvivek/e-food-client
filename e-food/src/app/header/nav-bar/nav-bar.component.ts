@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  cartItems: IProduct[] = [];
+  cartItemCount = 0;
   menuItems: Category[] = [];
   constructor(
     public dialog: MatDialog,
@@ -22,8 +22,8 @@ export class NavBarComponent implements OnInit {
     this.headerSvc.getMenuItems().subscribe((items) => {
       this.menuItems = items;
     });
-    this.cartSvc.getCartItems().subscribe((items) => {
-      this.cartItems = items;
+    this.headerSvc.getCartItemCount().subscribe((response) => {
+      this.cartItemCount = response.count || 0;
     });
   }
 
