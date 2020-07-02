@@ -1,3 +1,4 @@
+import { SharedService } from './shared.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -31,5 +32,6 @@ import {
     MatBadgeModule,
     MatDialogModule,
   ],
+  providers: [SharedService]
 })
 export class SharedKernelModule {}

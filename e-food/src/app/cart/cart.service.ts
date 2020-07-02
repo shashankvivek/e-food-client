@@ -14,13 +14,13 @@ export class CartService {
   constructor() { }
 
   addProductToCart(item: IProduct) {
-    // make a call to server and then get updated cart
-    // consider price change in sync with Products
     this.cartItems.push(item);
     this.cartItems$.next(this.cartItems);
   }
 
-  getCartItems(): Observable<IProduct[]> {
+
+
+  getCartItemsAddedEvent(): Observable<IProduct[]> {
     return this.cartItems$.asObservable();
   }
 

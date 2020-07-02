@@ -1,4 +1,6 @@
-import { IProduct } from './../product.model';
+import { SharedService } from './../../shared-kernel/shared.service';
+import { HeaderService } from './../../header/header.service';
+import { IProduct, IAddedToCartEvent } from './../product.model';
 import { ProductsService } from './../products.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +16,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: IProduct[];
   subscriptions = new Subscription();
 
-  constructor(public prodSvc: ProductsService, public route: ActivatedRoute) {}
+  constructor(
+    public prodSvc: ProductsService,
+    public route: ActivatedRoute,
+    public headerSvc: HeaderService,
+    public sharedSvc: SharedService
+  ) {}
 
   ngOnInit() {
     this.subscriptions.add(
@@ -30,5 +37,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  addItem(event: IAddedToCartEvent) {
+    this.prodSvc.addItemToCart(event).subscribe(
+      (response) => {
+        if (response.success) {
+          this.headerSvc.updateCart(event);
+        }
+      },
+      (err) => {
+        // this.sharedSvc.showSnackBar();
+        // show the error message as snack bar
+      }
+    );
   }
 }

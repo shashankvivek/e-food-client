@@ -7,9 +7,19 @@ export interface IProduct {
   productId: number;
   scId: number;
   unitPrice: number;
+  unitsInStock: number;
+}
+export interface IAddedToCartEvent {
+  product: IProduct;
+  quantity: number;
 }
 
-// export interface IProductGroup {
-//     grpSkuId: string;
-//     products: IProduct[];
-// }
+export interface IAddToCartRequest {
+  productId: number;
+  quantity: number;
+}
+
+export interface IAddedCartResponse {
+  success: boolean;
+  message: string;
+}

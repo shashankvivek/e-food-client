@@ -1,6 +1,7 @@
-import { CartService } from './../../cart/cart.service';
-import { IProduct } from './../product.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { ProductsService } from './../products.service';
+import { IProduct, IAddedToCartEvent } from './../product.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-product-grid',
@@ -10,15 +11,16 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductGridComponent implements OnInit {
 
   @Input() product: IProduct;
+  @Output() addedToCart = new EventEmitter<IAddedToCartEvent>();
 
   // disable add to cart if the prod is already in cart
-  constructor(public cartSvc: CartService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  addToCart(item: IProduct) {
-    this.cartSvc.addProductToCart(item);
+  addToCart(item: IProduct, qty: number) {
+    this.addedToCart.emit({product: item, quantity: qty});
   }
 
 }
