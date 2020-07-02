@@ -64,7 +64,7 @@ export class HeaderService {
 
   addGuestSessionInfo(): Observable<any> {
     return this.httpClient.post('/sessionInfo', {
-      extraInfo: 'string1123'
+      extraInfo: ''
     });
   }
 

@@ -9,6 +9,8 @@ import {
   MatIconModule,
   MatBadgeModule,
   MatDialogModule,
+  MatTableModule,
+  MatPaginatorModule,
 } from '@angular/material';
 
 @NgModule({
@@ -22,6 +24,8 @@ import {
     MatIconModule,
     MatBadgeModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     MatToolbarModule,
@@ -31,7 +35,9 @@ import {
     MatIconModule,
     MatBadgeModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
-  providers: [SharedService]
+  providers: [SharedService],
 })
 export class SharedKernelModule {}

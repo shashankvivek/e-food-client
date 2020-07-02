@@ -1,0 +1,36 @@
+<div class="cart-container">
+  <div class="cart-table">
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <img class="cart-img" alt="image" [src]="element.image" />
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.quantity }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cost">
+        <mat-header-cell *matHeaderCellDef> Cost </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.cost }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="maxItemToShow" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="cart-footer" mat-dialog-actions>
+    <button mat-raised-button (click)="closeCart()">Close</button>
+    <button mat-raised-button color="accent">Checkout</button>
+  </div>
+</div>
