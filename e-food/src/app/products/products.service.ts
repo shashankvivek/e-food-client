@@ -26,7 +26,7 @@ export class ProductsService {
   addItemToCart(params: IAddedToCartEvent): Observable<ISuccessResponse> {
     const payload: IAddToCartRequest = {
       productId: params.product.productId,
-      quantity: params.quantity,
+      totalQty: params.quantity,
     };
     return this.http.post<ISuccessResponse>('/cart', payload);
   }

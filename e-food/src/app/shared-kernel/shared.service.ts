@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class SharedService {
-  constructor() {}
+  constructor(public snackBar: MatSnackBar) {}
 
-  showSnackBar() {}
+  showSnackBar(message: string) {
+    this.snackBar.open(message, 'OK', {
+      duration: 8000,
+    });
+  }
 }

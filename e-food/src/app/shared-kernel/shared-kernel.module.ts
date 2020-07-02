@@ -11,12 +11,18 @@ import {
   MatDialogModule,
   MatTableModule,
   MatPaginatorModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRippleModule,
+  MatSnackBarModule,
 } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    FormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
@@ -25,9 +31,14 @@ import {
     MatBadgeModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
+    MatSnackBarModule
   ],
   exports: [
+    FormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
@@ -36,7 +47,11 @@ import {
     MatBadgeModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
+    MatSnackBarModule
   ],
   providers: [SharedService],
 })

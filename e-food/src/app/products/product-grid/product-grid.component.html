@@ -12,8 +12,13 @@
     <p>
      {{product.description}}
     </p>
+    <mat-form-field appearance="standard" >
+      <mat-label>Quantity</mat-label>
+      <input [disabled]="product.isAddedToCart" matInput [(ngModel)]="quantity" type="number">
+      <mat-hint>Maximum 12 units</mat-hint>
+    </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="addToCart(product,2)"[disabled]="product.isAddedToCart"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
+    <button mat-raised-button color="primary" (click)="addToCart(product,quantity)"[disabled]="product.isAddedToCart"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
   </mat-card-actions>
 </mat-card>

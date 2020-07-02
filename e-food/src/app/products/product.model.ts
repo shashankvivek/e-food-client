@@ -17,6 +17,6 @@ export interface IAddedToCartEvent {
 
 export interface IAddToCartRequest {
   productId: number;
-  quantity: number;
+  totalQty: number;
 }
 
