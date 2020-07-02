@@ -4,7 +4,7 @@ import { IProduct, IAddedToCartEvent } from './../product.model';
 import { ProductsService } from './../products.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -27,10 +27,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.route.params
         .pipe(
-          switchMap((params) => this.prodSvc.getProductsByGroupId(params.id))
+          switchMap((params) => combineLatest(this.prodSvc.getProductsByGroupId(params.id), this.headerSvc.getCartItemEvent()))
         )
-        .subscribe((response) => {
-          this.products = response;
+        .subscribe(([productList, cartItemList]) => {
+          productList.forEach(product => {
+            product.isAddedToCart = !!(cartItemList.find(item => item.productId === product.productId));
+          });
+          this.products = productList;
         })
     );
   }

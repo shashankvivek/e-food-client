@@ -8,6 +8,7 @@ export interface IProduct {
   scId: number;
   unitPrice: number;
   isAvailable: boolean;
+  isAddedToCart?: boolean;
 }
 export interface IAddedToCartEvent {
   product: IProduct;

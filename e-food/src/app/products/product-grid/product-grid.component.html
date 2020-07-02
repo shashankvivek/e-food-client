@@ -14,6 +14,6 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="addToCart(product,2)"[disabled]="!product.isAvailable"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
+    <button mat-raised-button color="primary" (click)="addToCart(product,2)"[disabled]="product.isAddedToCart"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
   </mat-card-actions>
 </mat-card>
