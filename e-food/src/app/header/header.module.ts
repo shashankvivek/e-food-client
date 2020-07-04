@@ -14,8 +14,7 @@ import { CartPreviewComponent } from './cart-preview/cart-preview.component';
   imports: [
     CommonModule,
     SharedKernelModule,
-    RouterModule,
-    HttpClientModule
+    RouterModule
   ],
   entryComponents: [CartPreviewComponent],
   exports: [NavBarComponent]

@@ -1,0 +1,18 @@
+.banner{
+    background-image: url("https://raw.githubusercontent.com/shashankvivek/e-food-client/master/e-food/src/assets/landing-img.jpg");
+
+    /* Full height */
+    height: 100%; 
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner-txt {
+    height: 100%;
+    text-align: center;
+    font-size: 90px;
+    font-weight: 200;
+}

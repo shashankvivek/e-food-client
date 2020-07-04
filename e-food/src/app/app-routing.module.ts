@@ -5,14 +5,14 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
-    loadChildren: () =>
-      import('./home/home.module').then((h) => h.HomeModule),
+    loadChildren: () => import('./home/home.module').then((h) => h.HomeModule),
   },
   {
-    path: 'products',
+    path: 'user',
     loadChildren: () =>
-      import('./products/products.module').then((h) => h.ProductsModule),
-  }
+      import('./user-auth/user-auth.module').then((h) => h.UserAuthModule),
+  },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({

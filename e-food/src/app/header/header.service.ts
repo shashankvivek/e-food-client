@@ -1,5 +1,5 @@
 import { ISuccessResponse } from './../shared-kernel/shared.model';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -87,11 +87,10 @@ export class HeaderService {
     return this.httpClient
       .delete<ISuccessResponse>('/cart?productId=' + productId)
       .pipe(
-        map((response) => {
+        tap((response) => {
           if (response.success) {
             this.removeFromCart(productId);
           }
-          return response;
         })
       );
   }

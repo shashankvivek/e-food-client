@@ -14,7 +14,7 @@
     </p>
     <mat-form-field appearance="standard" >
       <mat-label>Quantity</mat-label>
-      <input [disabled]="product.isAddedToCart" matInput [(ngModel)]="quantity" type="number">
+      <input [disabled]="product.isAddedToCart" matInput [(ngModel)]="quantity" type="number" min="0" max="12">
       <mat-hint>Maximum 12 units</mat-hint>
     </mat-form-field>
   </mat-card-content>

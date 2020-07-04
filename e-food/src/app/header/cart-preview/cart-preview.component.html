@@ -38,6 +38,6 @@
 
   <div class="cart-footer" mat-dialog-actions>
     <button mat-raised-button (click)="closeCart()">Close</button>
-    <button mat-raised-button color="accent">Checkout</button>
+    <button mat-raised-button [disabled]="items.length < 1" color="accent">Checkout</button>
   </div>
 </div>

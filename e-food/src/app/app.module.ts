@@ -1,4 +1,5 @@
-import { CartModule } from './cart/cart.module';
+import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 import { FooterModule } from './footer/footer.module';
 import { HeaderModule } from './header/header.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,9 +17,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HeaderModule,
-    FooterModule,
-    CartModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        }
+      }
+      })
   ],
   providers: [],
   bootstrap: [AppComponent]

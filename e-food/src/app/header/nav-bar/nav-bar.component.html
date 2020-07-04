@@ -10,7 +10,7 @@
     <mat-menu #menu="matMenu">
       <!-- remove hard coding -->
       <ng-container *ngFor="let subCategory of category.subCategories">
-        <button  mat-menu-item [routerLink]="['/products', subCategory.scId]">
+        <button  mat-menu-item [routerLink]="['./products', subCategory.scId]">
           {{subCategory.scName}}
         </button>
       </ng-container>
