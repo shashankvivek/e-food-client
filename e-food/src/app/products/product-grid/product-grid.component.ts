@@ -29,6 +29,7 @@ export class ProductGridComponent implements OnInit {
     } else {
       this.addedToCart.emit({product: item, quantity: qty});
     }
+    this.quantity = undefined;
   }
 
 }
