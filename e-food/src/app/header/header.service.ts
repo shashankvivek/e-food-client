@@ -1,3 +1,4 @@
+import { ISuccessResponse } from './../shared-kernel/shared.model';
 import { switchMap, map } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -82,7 +83,7 @@ export class HeaderService {
     });
   }
 
-  removeItemFromCart(productId: number) {
+  removeItemFromCart(productId: number): Observable<ISuccessResponse> {
     return this.httpClient
       .delete<ISuccessResponse>('/cart?productId=' + productId)
       .pipe(
