@@ -25,7 +25,7 @@ export class ProductGridComponent implements OnInit {
     if (qty > 12) {
       this.sharedSvc.showSnackBar('A maximum of 12 units can be ordered');
     } else if (qty < 1) {
-      this.sharedSvc.showSnackBar('Please provide a quantity.');
+      this.sharedSvc.showSnackBar('Please provide a valid quantity.');
     } else {
       this.addedToCart.emit({product: item, quantity: qty});
     }
