@@ -1,3 +1,4 @@
+import { SharedService } from './../../shared-kernel/shared.service';
 import { CartPreviewComponent } from './../cart-preview/cart-preview.component';
 import { HeaderService, Category, ICartItem } from './../header.service';
 import { IProduct } from './../../products/product.model';
@@ -17,7 +18,8 @@ export class NavBarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public cartSvc: CartService,
-    public headerSvc: HeaderService
+    public headerSvc: HeaderService,
+    public sharedSvc: SharedService
   ) {}
 
   ngOnInit() {
@@ -30,7 +32,9 @@ export class NavBarComponent implements OnInit {
       this.cartItems = cartItems;
     });
     this.headerSvc.addGuestSessionInfo().subscribe((res) => {
-      console.log(res);
+      // console.log(res);
+    }, err => {
+      this.sharedSvc.showSnackBar('Please enable cookie to work with this site');
     });
   }
 
@@ -38,7 +42,6 @@ export class NavBarComponent implements OnInit {
     this.dialog.open(CartPreviewComponent, {
       width: '500px',
       height: '500px'
-      // data:  this.cartItems
     });
   }
 }
