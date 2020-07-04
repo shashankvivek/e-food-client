@@ -1,3 +1,4 @@
+import { SharedService } from './../../shared-kernel/shared.service';
 import { HeaderService } from './../header.service';
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { ICartItem } from '../header.service';
@@ -29,14 +30,13 @@ export class CartPreviewComponent implements OnInit {
   items: ICartItem[] = [];
 
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public items: ICartItem[],
     public headerSvc: HeaderService,
+    public sharedSvc: SharedService,
     public dialogRef: MatDialogRef<CartPreviewComponent>
   ) {}
 
   ngOnInit() {
     this.headerSvc.getCartItemEvent().subscribe((items) => {
-      console.log(items);
       this.items = items;
       this.dataSource = new MatTableDataSource<ICartPreview>(
         this.items.map((item) => {
@@ -58,6 +58,10 @@ export class CartPreviewComponent implements OnInit {
   }
 
   removeItem(id: number) {
-    this.headerSvc.removeItemFromCart(id);
+    this.headerSvc.removeItemFromCart(id).subscribe(res => {
+      this.sharedSvc.showSnackBar('Item removed successfully');
+    }, err => {
+      this.sharedSvc.showSnackBar('Error removing item from cart');
+    });
   }
 }

@@ -1,5 +1,4 @@
-import { ISuccessResponse } from './../shared-kernel/shared.model';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -39,7 +38,7 @@ export class HeaderService {
 
   getCartPreview() {
     return this.httpClient.get<ICartItem[]>('/cart').pipe(
-      switchMap(items => {
+      switchMap((items) => {
         this.cartItems = items;
         this.cartItems$.next(this.cartItems);
         return this.cartItems$.asObservable();
@@ -48,7 +47,7 @@ export class HeaderService {
   }
 
   getCartItemEvent() {
-    return this.cartItems$.asObservable(); ;
+    return this.cartItems$.asObservable();
   }
 
   updateCart(event: IAddedToCartEvent): void {
@@ -57,7 +56,7 @@ export class HeaderService {
       productName: event.product.name,
       quantity: event.quantity,
       unitPrice: event.product.unitPrice,
-      imageUrl: event.product.imageUrl
+      imageUrl: event.product.imageUrl,
     };
     this.pushToCart(newItem);
   }
@@ -68,8 +67,10 @@ export class HeaderService {
   }
 
   private removeFromCart(productId: number) {
-    const index = this.cartItems.findIndex( item => item.productId === productId);
-    if (index > -1 ) {
+    const index = this.cartItems.findIndex(
+      (item) => item.productId === productId
+    );
+    if (index > -1) {
       this.cartItems.splice(index, 1);
     }
     this.cartItems$.next(this.cartItems);
@@ -77,16 +78,20 @@ export class HeaderService {
 
   addGuestSessionInfo(): Observable<any> {
     return this.httpClient.post('/sessionInfo', {
-      extraInfo: ''
+      extraInfo: '',
     });
   }
 
   removeItemFromCart(productId: number) {
-    this.httpClient.delete<ISuccessResponse>('/cart?productId=' + productId).subscribe(response => {
-      if (response.success) {
-        this.removeFromCart(productId);
-      }
-    });
+    return this.httpClient
+      .delete<ISuccessResponse>('/cart?productId=' + productId)
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.removeFromCart(productId);
+          }
+          return response;
+        })
+      );
   }
-
 }

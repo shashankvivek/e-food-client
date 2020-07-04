@@ -1,4 +1,4 @@
-import { ISuccessResponse } from './../shared-kernel/shared.model';
+import { ISuccessResponse, ICartSuccessResponse } from './../shared-kernel/shared.model';
 import {
   IProduct,
   IAddedToCartEvent,
@@ -23,11 +23,11 @@ export class ProductsService {
     );
   }
 
-  addItemToCart(params: IAddedToCartEvent): Observable<ISuccessResponse> {
+  addItemToCart(params: IAddedToCartEvent): Observable<ICartSuccessResponse> {
     const payload: IAddToCartRequest = {
       productId: params.product.productId,
       totalQty: params.quantity,
     };
-    return this.http.post<ISuccessResponse>('/cart', payload);
+    return this.http.post<ICartSuccessResponse>('/cart', payload);
   }
 }

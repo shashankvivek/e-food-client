@@ -27,11 +27,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.route.params
         .pipe(
-          switchMap((params) => combineLatest(this.prodSvc.getProductsByGroupId(params.id), this.headerSvc.getCartItemEvent()))
+          switchMap((params) =>
+            combineLatest(
+              this.prodSvc.getProductsByGroupId(params.id),
+              this.headerSvc.getCartItemEvent()
+            )
+          )
         )
         .subscribe(([productList, cartItemList]) => {
-          productList.forEach(product => {
-            product.isAddedToCart = !!(cartItemList.find(item => item.productId === product.productId));
+          productList.forEach((product) => {
+            product.isAddedToCart = !!cartItemList.find(
+              (item) => item.productId === product.productId
+            );
           });
           this.products = productList;
         })
@@ -46,12 +53,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.prodSvc.addItemToCart(event).subscribe(
       (response) => {
         if (response.success) {
-          this.headerSvc.updateCart(event);
+          this.headerSvc.updateCart({product: event.product, quantity: response.qtyAdded});
+          this.sharedSvc.showSnackBar(response.message);
         }
       },
       (err) => {
-        // this.sharedSvc.showSnackBar();
-        // show the error message as snack bar
+        this.sharedSvc.showSnackBar('Error adding item to the cart ');
       }
     );
   }
