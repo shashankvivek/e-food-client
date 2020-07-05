@@ -51,6 +51,7 @@ export class AuthService {
 
   loginSuccess(token: string) {
     localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    this.setUserToken(token);;
     this.router.navigate(['/home']);
   }
 }
