@@ -1,3 +1,4 @@
+import { UserAuthService } from './user-auth.service';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     SharedKernelModule
-
-  ]
+  ],
+  providers: [UserAuthService]
 })
 export class UserAuthModule { }

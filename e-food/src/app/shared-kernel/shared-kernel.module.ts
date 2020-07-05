@@ -16,6 +16,7 @@ import {
   MatInputModule,
   MatRippleModule,
   MatSnackBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -37,7 +38,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     FormsModule,
@@ -53,7 +55,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [SharedService],
 })
