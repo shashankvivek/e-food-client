@@ -5,6 +5,7 @@ import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../shared-kernel/auth.service';
 
 export interface SubCategory {
   scId: string;
@@ -32,14 +33,19 @@ export class HeaderService {
   private cartItems$ = new BehaviorSubject<ICartItem[]>([]);
   private cartItems: ICartItem[] = [];
 
-  constructor(private httpClient: HttpClient, public utilSvc: UtilService) {}
+  constructor(
+    private httpClient: HttpClient,
+    public authSvc: AuthService,
+    public utilSvc: UtilService
+  ) {}
 
   getMenuItems(): Observable<Category[]> {
     return this.httpClient.get<Category[]>('/categories');
   }
 
   getCartPreview() {
-    return this.httpClient.get<ICartItem[]>('/cart').pipe(
+    const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
+    return this.httpClient.get<ICartItem[]>(`/${path}/cart`).pipe(
       switchMap((items) => {
         this.cartItems = items;
         this.cartItems$.next(this.cartItems);
@@ -79,16 +85,22 @@ export class HeaderService {
   }
 
   addGuestSessionInfo(): void {
-    this.httpClient.post('/sessionInfo', {
-      extraInfo: '',
-    }).subscribe(res => {}, err => {
-      this.utilSvc.showSnackBar('Error with creating guest session');
-    });
+    this.httpClient
+      .post('/sessionInfo', {
+        extraInfo: '',
+      })
+      .subscribe(
+        (res) => {},
+        (err) => {
+          this.utilSvc.showSnackBar('Error with creating guest session');
+        }
+      );
   }
 
   removeItemFromCart(productId: number): Observable<ISuccessResponse> {
+    const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
     return this.httpClient
-      .delete<ISuccessResponse>('/cart?productId=' + productId)
+      .delete<ISuccessResponse>(`/${path}/cart?productId=${productId}`)
       .pipe(
         tap((response) => {
           if (response.success) {

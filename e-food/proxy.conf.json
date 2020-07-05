@@ -7,7 +7,11 @@
     "target": "http://127.0.0.1:8080",
     "secure": false
   },
-  "/cart": {
+  "/user/cart": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false
+  },
+  "/guest/cart": {
     "target": "http://127.0.0.1:8080",
     "secure": false
   },

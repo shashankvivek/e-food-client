@@ -8,14 +8,14 @@ import { UtilService } from './util.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  tokenPayload$ = new BehaviorSubject<IUserTokenPayload>({
+  tokenPayLoad: IUserTokenPayload = {
     user: '',
     authorized: false,
     exp: 0,
     fname: '',
     lname: '',
-  });
-
+  };
+  tokenPayload$ = new BehaviorSubject<IUserTokenPayload>(this.tokenPayLoad);
   constructor(
     public router: Router,
     public utilSvc: UtilService,
@@ -33,7 +33,8 @@ export class AuthService {
     }
     if (!this.jwtSvc.isTokenExpired(token)) {
       payload.isCustomer = payload.user !== '';
-      this.tokenPayload$.next(payload);
+      this.tokenPayLoad = payload;
+      this.tokenPayload$.next(this.tokenPayLoad);
     } else {
       this.utilSvc.showSnackBar('Invalid session. Please login again');
       this.logoutUser();
@@ -51,7 +52,7 @@ export class AuthService {
 
   loginSuccess(token: string) {
     localStorage.setItem(TOKEN_STORAGE_KEY, token);
-    this.setUserToken(token);;
+    this.setUserToken(token); 
     this.router.navigate(['/home']);
   }
 }

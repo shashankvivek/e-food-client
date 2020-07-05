@@ -7,10 +7,11 @@ import {
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { AuthService } from '../shared-kernel/auth.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, public authSvc: AuthService) {}
 
   getProductsByGroupId(grpId: number): Observable<IProduct[]> {
     const httpOptions = {
@@ -24,10 +25,11 @@ export class ProductsService {
   }
 
   addItemToCart(params: IAddedToCartEvent): Observable<ICartSuccessResponse> {
+    const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
     const payload: IAddToCartRequest = {
       productId: params.product.productId,
       totalQty: params.quantity,
     };
-    return this.http.post<ICartSuccessResponse>('/cart', payload);
+    return this.http.post<ICartSuccessResponse>(`/${path}/cart`, payload);
   }
 }
