@@ -15,6 +15,7 @@ interface ICartPreview {
   image: string;
   quantity: number;
   cost: number;
+  currency: string; 
 }
 
 @Component({
@@ -46,6 +47,7 @@ export class CartPreviewComponent implements OnInit {
             image: item.imageUrl,
             quantity: item.quantity,
             cost: item.quantity * item.unitPrice,
+            currency: item.currency
           };
         })
       );

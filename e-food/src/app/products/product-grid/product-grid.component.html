@@ -9,9 +9,10 @@
     alt="Photo of red apple"
   />
   <mat-card-content>
-    <p>
+    <!-- <p>
      {{product.description}}
-    </p>
+    </p> -->
+    <p>{{product.currency}} {{product.unitPrice}} </p>
     <mat-form-field appearance="standard" >
       <mat-label>Quantity</mat-label>
       <input [disabled]="product.isAddedToCart" matInput [(ngModel)]="quantity" type="number" min="0" max="12">

@@ -26,6 +26,7 @@ export interface ICartItem {
   quantity: number;
   unitPrice: number;
   imageUrl: string;
+  currency: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -65,6 +66,7 @@ export class HeaderService {
       quantity: event.quantity,
       unitPrice: event.product.unitPrice,
       imageUrl: event.product.imageUrl,
+      currency: event.product.currency
     };
     this.pushToCart(newItem);
   }
