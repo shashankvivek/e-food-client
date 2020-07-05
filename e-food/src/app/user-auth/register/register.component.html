@@ -1,1 +1,90 @@
-<p>register works!</p>
+<mat-card>
+  <mat-card-title>User Registration</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="regForm" (ngSubmit)="submit(regForm)">
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Your e-mail"
+            formControlName="username"
+          />
+        </mat-form-field>
+      </p>
+      <p
+        *ngIf="
+          regForm.get('username').touched && regForm.get('username').errors
+        "
+        class="error"
+      >
+        Please provide a valid email
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="First Name"
+            formControlName="fname"
+          />
+        </mat-form-field>
+      </p>
+      <p
+        *ngIf="regForm.get('fname').touched && regForm.get('fname').errors"
+        class="error"
+      >
+        Name length should between 3 to 10
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Last Name"
+            formControlName="lname"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            formControlName="pwd"
+          />
+        </mat-form-field>
+      </p>
+      <p
+        *ngIf="regForm.get('pwd').touched && regForm.get('pwd').errors"
+        class="error"
+      >
+        Password length should be between 6 and 10
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="number"
+            matInput
+            placeholder="Mobile Number"
+            formControlName="mobile"
+          />
+        </mat-form-field>
+      </p>
+
+      <div class="button">
+        <mat-spinner diameter="24" *ngIf="loginInProgress"></mat-spinner>
+        <button
+          [disabled]="regForm.touched && regForm.invalid"
+          type="submit"
+          color="primary"
+          mat-raised-button
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
