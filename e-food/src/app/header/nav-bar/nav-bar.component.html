@@ -17,7 +17,7 @@
     </mat-menu>
   </ng-container>
 
-  <button (click)="openCartModal()" class="cart-btn" mat-raised-button matBadge="{{cartItemCount}}" matBadgePosition="before" matBadgeColor="warn">
+  <button (click)="openCartModal()" class="cart-btn" mat-raised-button matBadge="{{cartItems.length}}" matBadgePosition="before" matBadgeColor="warn">
     <mat-icon >shopping_cart</mat-icon>Cart
   </button>
 </mat-toolbar>
