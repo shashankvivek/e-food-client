@@ -32,12 +32,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.SubscriptionGroup.add(combineLatest([
       this.headerSvc.getMenuItems(),
       this.headerSvc.getCartPreview(),
-      this.headerSvc.addGuestSessionInfo(),
       this.authSvc.getUserInfoFromToken()
     ]).subscribe(responseArray => {
       this.menuItems = responseArray[0];
       this.cartItems = responseArray[1];
-      this.userInfo = responseArray[3];
+      this.userInfo = responseArray[2];
+      if (!this.userInfo.isCustomer) {
+        this.headerSvc.addGuestSessionInfo();
+      }
     }, err => {
       this.sharedSvc.showSnackBar('Error loading contents');
     }));
@@ -48,6 +50,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
       width: '500px',
       height: '500px'
     });
+  }
+
+  logout() {
+    this.authSvc.logoutUser();
   }
 
   ngOnDestroy() {

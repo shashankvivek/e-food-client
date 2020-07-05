@@ -6,7 +6,12 @@
 .nav-bar{
   position: relative;
 }
-.cart-btn{
+.user-cart{
   position: absolute;
   right: 10px;
+  padding: 5px;
+}
+
+.user-info{
+  font-size: 16px;
 }

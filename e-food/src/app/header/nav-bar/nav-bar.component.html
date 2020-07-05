@@ -8,7 +8,6 @@
   <ng-container *ngFor="let category of menuItems">
     <button mat-button [matMenuTriggerFor]="menu">{{category.bcName}} <mat-icon>keyboard_arrow_down</mat-icon></button>
     <mat-menu #menu="matMenu">
-      <!-- remove hard coding -->
       <ng-container *ngFor="let subCategory of category.subCategories">
         <button  mat-menu-item [routerLink]="['./products', subCategory.scId]">
           {{subCategory.scName}}
@@ -18,15 +17,18 @@
   </ng-container>
 
   
-  <span *ngIf="userInfo && userInfo.isCustomer">
-    Welcome {{userInfo.fname}}
-  </span>
-
-  <span *ngIf="userInfo && !userInfo.isCustomer">
-   <a [routerLink]="['/user/login']">Login</a>
-  </span>
-
-  <button (click)="openCartModal()" class="cart-btn" mat-raised-button matBadge="{{cartItems.length}}" matBadgePosition="before" matBadgeColor="warn">
-    <mat-icon >shopping_cart</mat-icon>Cart
-  </button>
+  <div class="user-cart">
+    <span *ngIf="userInfo && userInfo.isCustomer">
+      <span class="user-info">Welcome, {{userInfo.fname}}</span>
+      <button mat-button (click)="logout()">Sign out</button>
+    </span>
+  
+    <span *ngIf="userInfo && !userInfo.isCustomer">
+      <button mat-button [routerLink]="['/user/login']">Login</button>  
+    </span>
+  
+    <button (click)="openCartModal()" mat-raised-button matBadge="{{cartItems.length}}" matBadgePosition="before" matBadgeColor="warn">
+      <mat-icon >shopping_cart</mat-icon>Cart
+    </button>
+  </div>
 </mat-toolbar>

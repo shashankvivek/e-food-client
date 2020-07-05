@@ -1,3 +1,4 @@
+import { UtilService } from 'src/app/shared-kernel/util.service';
 import { ISuccessResponse } from './../shared-kernel/shared.model';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
@@ -31,7 +32,7 @@ export class HeaderService {
   private cartItems$ = new BehaviorSubject<ICartItem[]>([]);
   private cartItems: ICartItem[] = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, public utilSvc: UtilService) {}
 
   getMenuItems(): Observable<Category[]> {
     return this.httpClient.get<Category[]>('/categories');
@@ -77,9 +78,11 @@ export class HeaderService {
     this.cartItems$.next(this.cartItems);
   }
 
-  addGuestSessionInfo(): Observable<any> {
-    return this.httpClient.post('/sessionInfo', {
+  addGuestSessionInfo(): void {
+    this.httpClient.post('/sessionInfo', {
       extraInfo: '',
+    }).subscribe(res => {}, err => {
+      this.utilSvc.showSnackBar('Error with creating guest session');
     });
   }
 

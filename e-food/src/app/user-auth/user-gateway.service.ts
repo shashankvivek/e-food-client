@@ -19,8 +19,8 @@ constructor(public http: HttpClient) {
 
 doLogin(userEmail: string, pwd: string): Observable < ILoginSuccess > {
     return this.http.post<ILoginSuccess>('/login', {
-      email: userEmail,
-      password: pwd,
+      email: userEmail.trim(),
+      password: pwd.trim(),
     });
   }
 }
