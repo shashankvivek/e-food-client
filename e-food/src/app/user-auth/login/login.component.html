@@ -1,16 +1,19 @@
 <mat-card>
-  <mat-card-title>Login</mat-card-title>
+  <mat-card-title>E-Food Login</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
       <p>
         <mat-form-field>
           <input
             type="text"
-            matInput
+            matInput            
             placeholder="Username"
             formControlName="username"
           />
         </mat-form-field>
+      </p>
+      <p *ngIf="loginForm.get('username').touched && loginForm.get('username').errors" class="error">
+          Please provide a valid email
       </p>
 
       <p>
@@ -23,13 +26,15 @@
           />
         </mat-form-field>
       </p>
-
+      <p *ngIf="loginForm.get('password').touched && loginForm.get('password').errors" class="error">
+        Password length should be more than 5
+    </p>
       <!-- <p *ngIf="error" class="error">
     {{ error }}
   </p> -->
 
       <div class="button">
-        <button type="submit" mat-button>Login</button>
+        <button [disabled]="loginForm.touched && loginForm.invalid"  type="submit" color="primary" mat-raised-button>Login</button>
       </div>
     </form>
   </mat-card-content>
