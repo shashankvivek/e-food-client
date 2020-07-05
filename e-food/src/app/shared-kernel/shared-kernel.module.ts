@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http';
-import { SharedService } from './shared.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -20,6 +19,7 @@ import {
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
+import { UtilService } from './util.service';
 
 @NgModule({
   declarations: [],
@@ -58,6 +58,6 @@ import { JwtModule } from '@auth0/angular-jwt';
     MatSnackBarModule,
     MatProgressSpinnerModule,
   ],
-  providers: [SharedService],
+  providers: [UtilService],
 })
 export class SharedKernelModule {}

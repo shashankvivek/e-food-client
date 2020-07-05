@@ -1,4 +1,3 @@
-import { SharedService } from './../../shared-kernel/shared.service';
 import { HeaderService } from './../header.service';
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { ICartItem } from '../header.service';
@@ -8,6 +7,7 @@ import {
   MatPaginator,
   MatTableDataSource,
 } from '@angular/material';
+import { UtilService } from 'src/app/shared-kernel/util.service';
 
 interface ICartPreview {
   productId: number;
@@ -31,7 +31,7 @@ export class CartPreviewComponent implements OnInit {
 
   constructor(
     public headerSvc: HeaderService,
-    public sharedSvc: SharedService,
+    public sharedSvc: UtilService,
     public dialogRef: MatDialogRef<CartPreviewComponent>
   ) {}
 

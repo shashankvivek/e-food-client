@@ -1,7 +1,8 @@
-import { SharedService } from './../../shared-kernel/shared.service';
+
 import { ProductsService } from './../products.service';
 import { IProduct, IAddedToCartEvent } from './../product.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UtilService } from 'src/app/shared-kernel/util.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ProductGridComponent implements OnInit {
   @Output() addedToCart = new EventEmitter<IAddedToCartEvent>();
   quantity: number;
   // disable add to cart if the prod is already in cart
-  constructor(public sharedSvc: SharedService) { }
+  constructor(public sharedSvc: UtilService) { }
 
   ngOnInit() {
   }

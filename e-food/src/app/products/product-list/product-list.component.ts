@@ -1,4 +1,3 @@
-import { SharedService } from './../../shared-kernel/shared.service';
 import { HeaderService } from './../../header/header.service';
 import { IProduct, IAddedToCartEvent } from './../product.model';
 import { ProductsService } from './../products.service';
@@ -6,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { UtilService } from 'src/app/shared-kernel/util.service';
 
 @Component({
   selector: 'app-product-list',
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     public prodSvc: ProductsService,
     public route: ActivatedRoute,
     public headerSvc: HeaderService,
-    public sharedSvc: SharedService
+    public sharedSvc: UtilService
   ) {}
 
   ngOnInit() {

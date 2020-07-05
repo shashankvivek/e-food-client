@@ -1,9 +1,11 @@
-import { UserAuthService } from './../user-auth.service';
+import { TOKEN_STORAGE_KEY } from './../../shared-kernel/contants';
+import { UserGatewayService } from '../user-gateway.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/shared-kernel/shared.service';
 import { finalize } from 'rxjs/operators';
+import { UtilService } from 'src/app/shared-kernel/util.service';
+import { AuthService } from 'src/app/shared-kernel/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +26,9 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    public authSvc: UserAuthService,
-    public router: Router,
-    public sharedSvc: SharedService
+    public gatewaySvc: UserGatewayService,
+    public sharedSvc: UtilService,
+    public authSvc: AuthService
   ) {}
 
   ngOnInit() {}
@@ -34,14 +36,13 @@ export class LoginComponent implements OnInit {
   submit(form: FormGroup) {
     if (form.valid) {
       this.loginInProgress = true;
-      this.authSvc
+      this.gatewaySvc
         .doLogin(form.get('username').value, form.get('password').value)
         .pipe(finalize(() => (this.loginInProgress = false)))
         .subscribe(
           (res) => {
             if (res.success) {
-              localStorage.setItem('access_token', res.token);
-              this.router.navigate(['/home']);
+              this.authSvc.loginSuccess(res.token);
             }
           },
           (err) => {

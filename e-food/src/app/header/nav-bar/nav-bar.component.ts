@@ -1,11 +1,13 @@
-import { SharedService } from './../../shared-kernel/shared.service';
+import { IUserTokenPayload } from './../../shared-kernel/shared.model';
+import { UtilService } from '../../shared-kernel/util.service';
 import { CartPreviewComponent } from './../cart-preview/cart-preview.component';
 import { HeaderService, Category, ICartItem } from './../header.service';
-import { IProduct } from './../../products/product.model';
+
 import { CartService } from './../../cart/cart.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { forkJoin, combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared-kernel/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,28 +17,27 @@ import { forkJoin, combineLatest, Subscription } from 'rxjs';
 export class NavBarComponent implements OnInit, OnDestroy {
   cartItems: ICartItem[] = [];
   menuItems: Category[] = [];
+  userInfo: IUserTokenPayload;
   SubscriptionGroup = new Subscription();
 
   constructor(
     public dialog: MatDialog,
     public cartSvc: CartService,
     public headerSvc: HeaderService,
-    public sharedSvc: SharedService
+    public sharedSvc: UtilService,
+    public authSvc: AuthService
   ) {}
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit() {
     this.SubscriptionGroup.add(combineLatest([
       this.headerSvc.getMenuItems(),
       this.headerSvc.getCartPreview(),
       this.headerSvc.addGuestSessionInfo(),
-
+      this.authSvc.getUserInfoFromToken()
     ]).subscribe(responseArray => {
-      console.log(responseArray);
       this.menuItems = responseArray[0];
       this.cartItems = responseArray[1];
+      this.userInfo = responseArray[3];
     }, err => {
       this.sharedSvc.showSnackBar('Error loading contents');
     }));
@@ -49,7 +50,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     });
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
     this.SubscriptionGroup.unsubscribe();
   }
 }
