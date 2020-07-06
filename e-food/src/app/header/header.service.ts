@@ -1,5 +1,5 @@
 import { UtilService } from 'src/app/shared-kernel/util.service';
-import { ISuccessResponse } from './../shared-kernel/shared.model';
+import { ISuccessResponse, ICartItem } from './../shared-kernel/shared.model';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -20,14 +20,6 @@ export interface Category {
   subCategories: SubCategory[];
 }
 
-export interface ICartItem {
-  productId: number;
-  productName: string;
-  quantity: number;
-  unitPrice: number;
-  imageUrl: string;
-  currency: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class HeaderService {

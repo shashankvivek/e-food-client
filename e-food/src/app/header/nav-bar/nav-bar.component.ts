@@ -1,9 +1,7 @@
-import { IUserTokenPayload } from './../../shared-kernel/shared.model';
+import { IUserTokenPayload, ICartItem } from './../../shared-kernel/shared.model';
 import { UtilService } from '../../shared-kernel/util.service';
 import { CartPreviewComponent } from './../cart-preview/cart-preview.component';
-import { HeaderService, Category, ICartItem } from './../header.service';
-
-import { CartService } from './../../cart/cart.service';
+import { HeaderService, Category } from './../header.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { combineLatest, Subscription } from 'rxjs';
@@ -22,7 +20,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    public cartSvc: CartService,
     public headerSvc: HeaderService,
     public sharedSvc: UtilService,
     public authSvc: AuthService

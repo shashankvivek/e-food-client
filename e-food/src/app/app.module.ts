@@ -1,5 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
+import { CartModule } from './cart/cart.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule, JwtInterceptor } from '@auth0/angular-jwt';
 import { FooterModule } from './footer/footer.module';
 import { HeaderModule } from './header/header.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,9 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedKernelModule } from './shared-kernel/shared-kernel.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,11 +23,12 @@ import { SharedKernelModule } from './shared-kernel/shared-kernel.module';
       config: {
         tokenGetter: () => {
           return localStorage.getItem('access_token');
-        }
-      }
-      })
+        },
+      },
+    }),
+    // CartModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

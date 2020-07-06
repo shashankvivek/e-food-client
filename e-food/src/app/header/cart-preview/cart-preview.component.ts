@@ -1,6 +1,6 @@
+import { ICartItem } from './../../shared-kernel/shared.model';
 import { HeaderService } from './../header.service';
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
-import { ICartItem } from '../header.service';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,

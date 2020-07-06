@@ -16,6 +16,8 @@ import {
   MatRippleModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatSelectModule,
+  MatListModule,
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -40,6 +42,8 @@ import { UtilService } from './util.service';
     MatRippleModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatListModule
   ],
   exports: [
     FormsModule,
@@ -57,6 +61,8 @@ import { UtilService } from './util.service';
     MatRippleModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatListModule
   ],
   providers: [UtilService],
 })

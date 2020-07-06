@@ -1,27 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { IProduct } from './../products/product.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CartService {
 
-  // cartItems: IProduct[] = [];
+  constructor(public http: HttpClient) { }
 
-  // cartItems$ = new BehaviorSubject<IProduct[]>([]);
-
-  // constructor() { }
-
-  // addProductToCart(item: IProduct) {
-  //   this.cartItems.push(item);
-  //   this.cartItems$.next(this.cartItems);
-  // }
-
-
-
-  // getCartItemsAddedEvent(): Observable<IProduct[]> {
-  //   return this.cartItems$.asObservable();
-  // }
+  getCheckoutCartItems(): Observable<any> {
+    return this.http.get<any>('/v1/checkoutCart');
+  }
 
 }
