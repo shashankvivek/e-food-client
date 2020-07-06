@@ -41,12 +41,12 @@ export class HeaderService {
   ) {}
 
   getMenuItems(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>('/categories');
+    return this.httpClient.get<Category[]>('/v1/categories');
   }
 
   getCartPreview() {
     const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
-    return this.httpClient.get<ICartItem[]>(`/${path}/cart`).pipe(
+    return this.httpClient.get<ICartItem[]>(`/v1/${path}/cart`).pipe(
       switchMap((items) => {
         this.cartItems = items;
         this.cartItems$.next(this.cartItems);
@@ -88,7 +88,7 @@ export class HeaderService {
 
   addGuestSessionInfo(): void {
     this.httpClient
-      .post('/sessionInfo', {
+      .post('/v1/sessionInfo', {
         extraInfo: '',
       })
       .subscribe(
@@ -102,7 +102,7 @@ export class HeaderService {
   removeItemFromCart(productId: number): Observable<ISuccessResponse> {
     const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
     return this.httpClient
-      .delete<ISuccessResponse>(`/${path}/cart?productId=${productId}`)
+      .delete<ISuccessResponse>(`/v1/${path}/cart?productId=${productId}`)
       .pipe(
         tap((response) => {
           if (response.success) {

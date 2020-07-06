@@ -1,29 +1,5 @@
 {
-  "/categories": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/productListBySubCategory/*": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/user/cart": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/guest/cart": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/sessionInfo": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/login": {
-    "target": "http://127.0.0.1:8080",
-    "secure": false
-  },
-  "/register": {
+  "/v1/*": {
     "target": "http://127.0.0.1:8080",
     "secure": false
   }

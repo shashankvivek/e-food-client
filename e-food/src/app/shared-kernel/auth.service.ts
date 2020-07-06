@@ -43,7 +43,7 @@ export class AuthService {
 
   logoutUser() {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
-    this.router.navigate(['/guest/login']);
+    this.router.navigate(['/v1/guest/login']);
   }
 
   getUserInfoFromToken(): Observable<IUserTokenPayload> {

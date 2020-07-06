@@ -17,13 +17,13 @@ export class GuestService {
   constructor(public http: HttpClient) {}
 
   doLogin(userEmail: string, pwd: string): Observable<ILoginSuccess> {
-    return this.http.post<ILoginSuccess>('/login', {
+    return this.http.post<ILoginSuccess>('/v1/login', {
       email: userEmail.trim(),
       password: pwd.trim(),
     });
   }
 
   registerUser(userInfo: IRegistrationPayload): Observable<ISuccessResponse> {
-    return this.http.post<ISuccessResponse>('/register', userInfo);
+    return this.http.post<ISuccessResponse>('/v1/register', userInfo);
   }
 }

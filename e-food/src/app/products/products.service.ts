@@ -19,7 +19,7 @@ export class ProductsService {
       withCredentials: true,
     };
     return this.http.get<IProduct[]>(
-      `/productListBySubCategory/${grpId}`,
+      `/v1/productListBySubCategory/${grpId}`,
       httpOptions
     );
   }
@@ -30,6 +30,6 @@ export class ProductsService {
       productId: params.product.productId,
       totalQty: params.quantity,
     };
-    return this.http.post<ICartSuccessResponse>(`/${path}/cart`, payload);
+    return this.http.post<ICartSuccessResponse>(`/v1/${path}/cart`, payload);
   }
 }
