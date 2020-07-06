@@ -1,3 +1,4 @@
 create interceptor to switch between local and hosted services
 put spinner
 inform user about 3rd party cookie
+user HTTP-only cookie for storing access_token for better security
