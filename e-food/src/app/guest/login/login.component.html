@@ -33,7 +33,8 @@
       <div class="button">
         <mat-spinner diameter="24" *ngIf="loginInProgress"></mat-spinner>
         <button [disabled]="loginForm.touched && loginForm.invalid"  type="submit" color="primary" mat-raised-button>Login</button>
-      </div>
+      </div>      
+      <a [routerLink]="['../register']">Register New User</a>
     </form>
   </mat-card-content>
 </mat-card>

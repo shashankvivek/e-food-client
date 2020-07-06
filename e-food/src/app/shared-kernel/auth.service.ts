@@ -43,7 +43,7 @@ export class AuthService {
 
   logoutUser() {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
-    this.router.navigate(['/user/login']);
+    this.router.navigate(['/guest/login']);
   }
 
   getUserInfoFromToken(): Observable<IUserTokenPayload> {
@@ -52,7 +52,7 @@ export class AuthService {
 
   loginSuccess(token: string) {
     localStorage.setItem(TOKEN_STORAGE_KEY, token);
-    this.setUserToken(token); 
+    this.setUserToken(token);
     this.router.navigate(['/home']);
   }
 }

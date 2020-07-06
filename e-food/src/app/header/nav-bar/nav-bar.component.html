@@ -24,7 +24,7 @@
     </span>
   
     <span *ngIf="userInfo && !userInfo.isCustomer">
-      <button mat-button [routerLink]="['/user/login']">Login</button>  
+      <button mat-button [routerLink]="['/guest/login']">Login</button>  
     </span>
   
     <button (click)="openCartModal()" mat-raised-button matBadge="{{cartItems.length}}" matBadgePosition="before" matBadgeColor="warn">

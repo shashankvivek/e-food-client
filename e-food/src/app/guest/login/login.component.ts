@@ -1,5 +1,5 @@
 import { TOKEN_STORAGE_KEY } from './../../shared-kernel/contants';
-import { UserGatewayService } from '../user-gateway.service';
+import { GuestService } from '../guest.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    public gatewaySvc: UserGatewayService,
+    public gatewaySvc: GuestService,
     public sharedSvc: UtilService,
     public authSvc: AuthService
   ) {}

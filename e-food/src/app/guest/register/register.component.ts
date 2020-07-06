@@ -1,10 +1,17 @@
 import { UtilService } from 'src/app/shared-kernel/util.service';
-
-import { UserGatewayService } from './../user-gateway.service';
+import { GuestService } from '../guest.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared-kernel/auth.service';
+import { Router } from '@angular/router';
 
+export interface IRegistrationPayload {
+  email: string;
+  password: string;
+  fname: string;
+  lname: string;
+  phoneNo: number;
+}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -35,12 +42,34 @@ export class RegisterComponent implements OnInit {
   });
 
   constructor(
-    public gatewaySvc: UserGatewayService,
+    public gatewaySvc: GuestService,
     public sharedSvc: UtilService,
-    public authSvc: AuthService
+    public authSvc: AuthService,
+    public router: Router,
   ) {}
 
   ngOnInit() {}
 
-  submit() {}
+  submit(form: FormGroup) {
+    if (form.valid) {
+      const payload: IRegistrationPayload = {
+        email: form.get('username').value,
+        fname: form.get('fname').value,
+        lname:  form.get('lname').value,
+        password:  form.get('pwd').value,
+        phoneNo:  form.get('mobile').value || undefined
+      };
+
+      this.gatewaySvc.registerUser(payload).subscribe(res => {
+          if (res.success) {
+            this.sharedSvc.showSnackBar('User Registered successfully');
+            this.router.navigate(['../login']);
+          } else {
+            this.sharedSvc.showSnackBar(res.message);
+          }
+      }, err => {
+        this.sharedSvc.showSnackBar(err);
+      });
+    }
+  }
 }

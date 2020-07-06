@@ -1,4 +1,4 @@
-import {  UserGatewayService } from './user-gateway.service';
+import {  GuestService } from './guest.service';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedKernelModule
   ],
-  providers: [UserGatewayService]
+  providers: [GuestService]
 })
-export class UserAuthModule { }
+export class GuestModule { }

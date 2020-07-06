@@ -1,3 +1,5 @@
+import { ISuccessResponse } from '../shared-kernel/shared.model';
+import { IRegistrationPayload } from './register/register.component';
 import { TOKEN_STORAGE_KEY } from '../shared-kernel/contants';
 import { IUserTokenPayload } from '../shared-kernel/shared.model';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -11,16 +13,17 @@ interface ILoginSuccess {
 }
 
 @Injectable()
-export class UserGatewayService {
+export class GuestService {
+  constructor(public http: HttpClient) {}
 
-constructor(public http: HttpClient) {
-
-}
-
-doLogin(userEmail: string, pwd: string): Observable < ILoginSuccess > {
+  doLogin(userEmail: string, pwd: string): Observable<ILoginSuccess> {
     return this.http.post<ILoginSuccess>('/login', {
       email: userEmail.trim(),
       password: pwd.trim(),
     });
+  }
+
+  registerUser(userInfo: IRegistrationPayload): Observable<ISuccessResponse> {
+    return this.http.post<ISuccessResponse>('/register', userInfo);
   }
 }

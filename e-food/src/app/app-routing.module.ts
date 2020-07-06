@@ -8,9 +8,9 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((h) => h.HomeModule),
   },
   {
-    path: 'user',
+    path: 'guest',
     loadChildren: () =>
-      import('./user-auth/user-auth.module').then((h) => h.UserAuthModule),
+      import('./guest/guest.module').then((h) => h.GuestModule),
   },
   { path: '**', redirectTo: '/home' },
 ];
