@@ -12,7 +12,7 @@ import { take, finalize } from 'rxjs/operators';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartItems: any[];
+  cartData: any[];
   userName: string;
   qtyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   loading = false;
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
     ])
       .pipe(take(1), finalize(() => {this.loading = false; }) )
       .subscribe((res) => {
-        this.cartItems = res[0];
+        this.cartData = res[0];
         this.userName = res[1].fname;
       });
   }
