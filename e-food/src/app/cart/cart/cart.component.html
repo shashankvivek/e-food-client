@@ -42,7 +42,7 @@
               </mat-select>
             </div>
             <div class="cell unit-cell">
-              {{ ruleItem.currency }}. {{ ruleItem.totalPrice }}
+              {{ cartData.currency }}. {{ ruleItem.totalPrice }}
             </div>
           </div>
           <mat-divider></mat-divider>
@@ -52,9 +52,9 @@
           <div class="cell discount">
             <span class="strong">Special Price:</span>
             <span class="striked">
-              {{ item.currency }}.{{ item.actualPrice }}</span
+              {{ cartData.currency }}.{{ item.actualPrice }}</span
             >
-            {{ item.currency }}.{{ item.discountedPrice }}
+            {{ cartData.currency }}.{{ item.discountedPrice }}
           </div>
         </div>
       </ng-container>
