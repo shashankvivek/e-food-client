@@ -1,37 +1,80 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-button ><mat-icon routerLink="/">arrow_back</mat-icon></button>
+    <button mat-button><mat-icon routerLink="/">arrow_back</mat-icon></button>
     <span>Home</span>
-
   </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="cart">
-  <mat-list>
-    <h2 mat-header>{{userName}}'s Cart</h2>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <h2 mat-header>{{ userName }}'s Cart</h2>
     <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let item of cartItems">
-      <mat-icon mat-list-icon>folder</mat-icon>
-      <h4 mat-line>{{ item.productName }}</h4>
-      <!-- <mat-form-field> -->
-        <mat-select
-          style="width: 120px;"
-          mat-line
-          placeholder="Select Quantity"
-          [(value)]="item.quantity"
-        >
-          <ng-container>
-            <mat-option [value]="qty" *ngFor="let qty of qtyList">
-              {{ qty }}
-            </mat-option>
-          </ng-container>
-        </mat-select>
-      <!-- </mat-form-field> -->
-    <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
+    <div *ngFor="let item of cartItems">
+      <div class="row">
+        <ng-container *ngIf="item.ruleSetId">
+          <div class="nested-row">
+            <div class="row" *ngFor="let ruleItem of item.items">
+                <div class="cell img-cell">
+                  <img class="cart-img" alt="image" [src]="ruleItem.imageUrl" />
+                </div>
+                <div class="cell name-cell">
+                  <h4 mat-line>{{ ruleItem.productName }}</h4>
+                </div>
+                <div class="cell qty-cell">
+                  <mat-select
+                    class="select-box"
+                    (selectionChange)="QtyChanged(ruleItem)"
+                    style="width: 120px;"
+                    mat-line
+                    placeholder="Select Quantity"
+                    [(value)]="ruleItem.quantity"
+                  >
+                    <mat-option [value]="qty" *ngFor="let qty of qtyList">
+                      {{ qty }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+                <div class="cell unit-cell">
+                    {{ruleItem.currency}}. {{ruleItem.totalPrice}}
+                </div>
+            </div>
+            <div class="cell discount">Discount: {{item.discountPercent}}%</div>
+            <div class="cell discount">
+              Special Price: <span class="striked">{{item.currency}}.{{item.actualPrice}}</span>
+              {{item.currency}}.{{item.discountedPrice}}              
+            </div>
+          </div>            
+        </ng-container>
+        <ng-container *ngIf="!item.ruleSetId">
+          <div class="cell img-cell">
+            <img class="cart-img" alt="image" [src]="item.imageUrl" />
+          </div>
+          <div class="cell name-cell">
+            <h4 mat-line>{{ item.productName }}</h4>
+          </div>
+          <div class="cell qty-cell">
+            <mat-select
+              class="select-box"
+              (selectionChange)="QtyChanged(item)"
+              style="width: 120px;"
+              mat-line
+              placeholder="Select Quantity"
+              [(value)]="item.quantity"
+            >
+              <mat-option [value]="qty" *ngFor="let qty of qtyList">
+                {{ qty }}
+              </mat-option>
+            </mat-select>
+          </div>
+          <div class="cell unit-cell">
+            {{item.currency}}. {{item.totalPrice}}
+        </div>
+        </ng-container>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
 </div>
 
-<div class="example-button-row">
+<!-- <div class="example-button-row">
   <button mat-raised-button color="primary">Send</button>
-</div>
+</div> -->
