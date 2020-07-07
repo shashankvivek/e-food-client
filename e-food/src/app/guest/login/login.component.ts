@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public gatewaySvc: GuestService,
-    public sharedSvc: UtilService,
+    public utilSvc: UtilService,
     public authSvc: AuthService
   ) {}
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
             }
           },
           (err) => {
-            this.sharedSvc.showSnackBar('Invalid Username / password');
+            this.utilSvc.showSnackBar('Invalid Username / password');
           }
         );
     }

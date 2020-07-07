@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared-kernel/auth.service';
 import { ICartItem } from './../../shared-kernel/shared.model';
 import { HeaderService } from './../header.service';
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
@@ -8,6 +9,8 @@ import {
   MatTableDataSource,
 } from '@angular/material';
 import { UtilService } from 'src/app/shared-kernel/util.service';
+import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface ICartPreview {
   productId: number;
@@ -15,7 +18,7 @@ interface ICartPreview {
   image: string;
   quantity: number;
   cost: number;
-  currency: string; 
+  currency: string;
 }
 
 @Component({
@@ -29,14 +32,20 @@ export class CartPreviewComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   maxItemToShow = [6];
   items: ICartItem[] = [];
+  isGuest: boolean;
 
   constructor(
     public headerSvc: HeaderService,
-    public sharedSvc: UtilService,
-    public dialogRef: MatDialogRef<CartPreviewComponent>
+    public utilSvc: UtilService,
+    public dialogRef: MatDialogRef<CartPreviewComponent>,
+    public authSvc: AuthService,
+    public router: Router
   ) {}
 
   ngOnInit() {
+    this.authSvc.getUserInfoFromToken().pipe(take(1)).subscribe(userInfo => {
+      this.isGuest = !userInfo.isCustomer;
+    });
     this.headerSvc.getCartItemEvent().subscribe((items) => {
       this.items = items;
       this.dataSource = new MatTableDataSource<ICartPreview>(
@@ -59,11 +68,20 @@ export class CartPreviewComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  login() {
+    this.dialogRef.close();
+    this.router.navigate(['/guest/login']);
+  }
+
+  goToCart() {
+    this.dialogRef.close();
+    this.router.navigate(['/cart']);
+  }
   removeItem(id: number) {
     this.headerSvc.removeItemFromCart(id).subscribe(res => {
-      this.sharedSvc.showSnackBar('Item removed successfully');
+      this.utilSvc.showSnackBar('Item removed successfully');
     }, err => {
-      this.sharedSvc.showSnackBar('Error removing item from cart');
+      this.utilSvc.showSnackBar('Error removing item from cart');
     });
   }
 }

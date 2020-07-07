@@ -38,6 +38,7 @@
 
   <div class="cart-footer" mat-dialog-actions>
     <button mat-raised-button (click)="closeCart()">Close</button>
-    <button mat-raised-button [disabled]="items.length < 1" color="accent">Checkout</button>
+    <button mat-raised-button *ngIf="!isGuest" [disabled]="items.length < 1" (click)="goToCart()" color="accent">Go To Cart</button>
+    <button mat-raised-button *ngIf="isGuest" [disabled]="items.length < 1" (click)="login()" color="accent">Login to view cart</button>
   </div>
 </div>

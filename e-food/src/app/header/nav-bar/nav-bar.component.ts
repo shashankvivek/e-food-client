@@ -21,7 +21,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public headerSvc: HeaderService,
-    public sharedSvc: UtilService,
+    public utilSvc: UtilService,
     public authSvc: AuthService
   ) {}
 
@@ -38,7 +38,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
         this.headerSvc.addGuestSessionInfo();
       }
     }, err => {
-      this.sharedSvc.showSnackBar('Error loading contents');
+      this.utilSvc.showSnackBar('Error loading contents');
     }));
   }
 

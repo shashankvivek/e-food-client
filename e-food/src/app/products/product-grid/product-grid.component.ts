@@ -16,7 +16,7 @@ export class ProductGridComponent implements OnInit {
   @Output() addedToCart = new EventEmitter<IAddedToCartEvent>();
   quantity: number;
   // disable add to cart if the prod is already in cart
-  constructor(public sharedSvc: UtilService) { }
+  constructor(public utilSvc: UtilService) { }
 
   ngOnInit() {
   }
@@ -24,9 +24,9 @@ export class ProductGridComponent implements OnInit {
   addToCart(item: IProduct, selectedQty: number) {
     const qty = selectedQty || 0;
     if (qty > 12) {
-      this.sharedSvc.showSnackBar('A maximum of 12 units can be ordered');
+      this.utilSvc.showSnackBar('A maximum of 12 units can be ordered');
     } else if (qty < 1) {
-      this.sharedSvc.showSnackBar('Please provide a valid quantity.');
+      this.utilSvc.showSnackBar('Please provide a valid quantity.');
     } else {
       this.addedToCart.emit({product: item, quantity: qty});
     }

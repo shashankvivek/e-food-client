@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public gatewaySvc: GuestService,
-    public sharedSvc: UtilService,
+    public utilSvc: UtilService,
     public authSvc: AuthService,
     public router: Router,
   ) {}
@@ -62,13 +62,13 @@ export class RegisterComponent implements OnInit {
 
       this.gatewaySvc.registerUser(payload).subscribe(res => {
           if (res.success) {
-            this.sharedSvc.showSnackBar('User Registered successfully');
+            this.utilSvc.showSnackBar('User Registered successfully');
             this.router.navigate(['../login']);
           } else {
-            this.sharedSvc.showSnackBar(res.message);
+            this.utilSvc.showSnackBar(res.message);
           }
       }, err => {
-        this.sharedSvc.showSnackBar(err);
+        this.utilSvc.showSnackBar(err);
       });
     }
   }

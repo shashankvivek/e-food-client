@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     public prodSvc: ProductsService,
     public route: ActivatedRoute,
     public headerSvc: HeaderService,
-    public sharedSvc: UtilService
+    public utilSvc: UtilService
   ) {}
 
   ngOnInit() {
@@ -54,11 +54,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       (response) => {
         if (response.success) {
           this.headerSvc.updateCart({product: event.product, quantity: response.qtyAdded});
-          this.sharedSvc.showSnackBar(response.message);
+          this.utilSvc.showSnackBar(response.message);
         }
       },
       (err) => {
-        this.sharedSvc.showSnackBar('Error adding item to the cart ');
+        this.utilSvc.showSnackBar('Error adding item to the cart ');
       }
     );
   }
