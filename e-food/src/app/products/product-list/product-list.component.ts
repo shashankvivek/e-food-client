@@ -14,7 +14,7 @@ import { UtilService } from 'src/app/shared-kernel/util.service';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products: IProduct[];
-  subscriptions = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     public prodSvc: ProductsService,

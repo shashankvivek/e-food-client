@@ -1,32 +1,37 @@
-<div>asdasdasd</div>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-button ><mat-icon routerLink="/">arrow_back</mat-icon></button>
+    <span>Home</span>
 
-<!-- <mat-toolbar color="primary">
-	<mat-toolbar-row>
-		<span>Home</span>
   </mat-toolbar-row>
 </mat-toolbar>
 
-
-  <mat-list >
-    <h3 mat-subheader>Folders</h3>
-    <mat-list-item *ngFor="let storeData of store">
-      <mat-icon mat-list-icon>folder</mat-icon>
-      <h4 mat-line>{{storeData.name}}</h4>
-      
-      <mat-select style="width: 120px;" mat-line placeholder="Select Weight" [(ngModel)]="storeData.selectedWeight">
-
-        <ng-container>
-          <mat-option  *ngFor="let food of piece" [value]="food">
-            {{food}} Piece
-          </mat-option>
-        </ng-container>
-        
-      </mat-select>
-
-    </mat-list-item>
+<div class="cart">
+  <mat-list>
+    <h2 mat-header>{{userName}}'s Cart</h2>
     <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let item of cartItems">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{ item.productName }}</h4>
+      <!-- <mat-form-field> -->
+        <mat-select
+          style="width: 120px;"
+          mat-line
+          placeholder="Select Quantity"
+          [(value)]="item.quantity"
+        >
+          <ng-container>
+            <mat-option [value]="qty" *ngFor="let qty of qtyList">
+              {{ qty }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      <!-- </mat-form-field> -->
+    <mat-divider></mat-divider>
+    </mat-list-item>
   </mat-list>
+</div>
 
 <div class="example-button-row">
- <button mat-raised-button color="primary" (click)="submit()">Send</button>
-</div> -->
+  <button mat-raised-button color="primary">Send</button>
+</div>
