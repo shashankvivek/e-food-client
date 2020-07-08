@@ -38,14 +38,19 @@ export class RegisterComponent implements OnInit {
       Validators.minLength(6),
       Validators.maxLength(10),
     ]),
-    mobile: new FormControl('', [Validators.maxLength(10)]),
+    mobile: new FormControl('', [
+      Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('[0-9]*')
+    ]),
   });
 
   constructor(
     public gatewaySvc: GuestService,
     public utilSvc: UtilService,
     public authSvc: AuthService,
-    public router: Router,
+    public router: Router
   ) {}
 
   ngOnInit() {}
@@ -55,21 +60,24 @@ export class RegisterComponent implements OnInit {
       const payload: IRegistrationPayload = {
         email: form.get('username').value,
         fname: form.get('fname').value,
-        lname:  form.get('lname').value,
-        password:  form.get('pwd').value,
-        phoneNo:  form.get('mobile').value || undefined
+        lname: form.get('lname').value,
+        password: form.get('pwd').value,
+        phoneNo: form.get('mobile').value
       };
 
-      this.gatewaySvc.registerUser(payload).subscribe(res => {
+      this.gatewaySvc.registerUser(payload).subscribe(
+        (res) => {
           if (res.success) {
             this.utilSvc.showSnackBar('User Registered successfully');
             this.router.navigate(['../login']);
           } else {
             this.utilSvc.showSnackBar(res.message);
           }
-      }, err => {
-        this.utilSvc.showSnackBar(err);
-      });
+        },
+        (err) => {
+          this.utilSvc.showSnackBar(err);
+        }
+      );
     }
   }
 }

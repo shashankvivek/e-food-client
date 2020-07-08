@@ -13,7 +13,8 @@ export class CartService {
   constructor(public http: HttpClient) {}
 
   getCheckoutCartItems(): Observable<any> {
-    // return this.http.get<ICartItem[]>('/v1/checkoutCart');
+    this.http.get<ICartItem[]>('/v1/checkoutCart').subscribe(res => {console.log(res);
+    });
     return of({
       totalSaving: 51,
       totalPrice: 279,

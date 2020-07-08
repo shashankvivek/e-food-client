@@ -66,14 +66,19 @@
       <p>
         <mat-form-field>
           <input
-            type="number"
+            type="text"
             matInput
             placeholder="Mobile Number"
             formControlName="mobile"
           />
         </mat-form-field>
       </p>
-
+      <p
+        *ngIf="regForm.get('mobile').touched && regForm.get('mobile').errors"
+        class="error"
+      >
+        10 digit mobile number is required
+      </p>
       <div class="button">
         <mat-spinner diameter="24" *ngIf="loginInProgress"></mat-spinner>
         <button
