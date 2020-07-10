@@ -19,7 +19,7 @@ export class CartService {
       totalSaving: 51,
       totalPrice: 279,
       currency: 'Rs',
-      cartItem: [
+      offerItems: [
         {
           ruleSetId: 1,
           items: [
@@ -75,7 +75,9 @@ export class CartService {
           actualPrice: 140.0,
           discountPercent: 30,
           discountedPrice: 98.0,
-        },
+        }
+      ],
+      items: [
         {
           currency: 'Rs',
           imageUrl:
@@ -85,8 +87,8 @@ export class CartService {
           quantity: 5,
           unitPrice: 20,
           totalPrice: 100,
-        },
-      ],
+        }
+      ]
     });
   }
 
