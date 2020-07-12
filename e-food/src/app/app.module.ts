@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedKernelModule } from './shared-kernel/shared-kernel.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

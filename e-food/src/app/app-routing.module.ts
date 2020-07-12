@@ -16,7 +16,11 @@ const routes: Routes = [
   },
   {
     path: 'cart',
-    // component: CartComponent
+    loadChildren: () => import('./cart/cart.module').then((c) => c.CartModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'cart',
     loadChildren: () => import('./cart/cart.module').then((c) => c.CartModule),
     canActivate: [AuthGuard],
   },

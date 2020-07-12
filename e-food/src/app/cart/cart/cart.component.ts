@@ -51,7 +51,7 @@ export class CartComponent implements OnInit {
       .subscribe((res) => {
         this.cartData = res[0];
         this.cartData.couponId = this.cartData.couponId || '';
-        this.couponActivated = this.cartData.couponId.length > 0 ;
+        this.couponActivated = this.cartData.couponId.length > 0;
         this.userName = res[1].fname;
       });
   }
@@ -71,10 +71,10 @@ export class CartComponent implements OnInit {
         }
         console.log(res);
       },
-        (err) => {
-          console.log(err);
-          this.utilSvc.showSnackBar(err);
-        }
+      (err) => {
+        console.log(err);
+        this.utilSvc.showSnackBar(err);
+      }
     );
   }
   applyCoupon() {
@@ -86,12 +86,58 @@ export class CartComponent implements OnInit {
           }
           console.log(res);
         },
-          (err) => {
-            console.log(err.error);
-            this.utilSvc.showSnackBar(err.error);
-          }
+        (err) => {
+          console.log(err.error);
+          this.cartData.couponId = '';
+          this.utilSvc.showSnackBar(err.error);
+        }
       );
     }
+  }
 
+  createRzpayOrder() {
+    this.cartSvc
+      .initPaymentProcess(
+        this.cartData.totalPrice * 100,
+        this.cartData.currency
+      )
+      .subscribe((res) => {
+        this.payWithRazor(res.id);
+      });
+  }
+
+  payWithRazor(val) {
+    const options: any = {
+      key: 'rzp_test_eEsrrirzQRWFdc',
+      amount: this.cartData.totalPrice * 100, // amount should be in paise format to display Rs 1255 without decimal point
+      currency: 'INR',
+      name: 'e-food', // company name or product name
+      description: '', // product description
+      image: './../../assets/diet.png', // company logo or product image
+      order_id: val, // order_id created by you in backend
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false,
+      },
+      notes: {
+        // include notes if any
+      },
+      theme: {
+        color: '#0c238a',
+      },
+    };
+    options.handler = (response, error) => {
+      options.response = response;
+      this.cartSvc.validatePayment(response).subscribe((res) => {
+        // move to order page as per the returned response
+        console.log(res);
+      });
+    };
+    options.modal.ondismiss = () => {
+      // handle the case when user closes the form while transaction is in progress
+      console.log('Transaction cancelled.');
+    };
+    const rzp = new this.cartSvc.nativeWindow.Razorpay(options);
+    rzp.open();
   }
 }

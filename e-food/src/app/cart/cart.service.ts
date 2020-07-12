@@ -19,10 +19,13 @@ export class CartService {
   }
 
   removeCouponFromCart(id: string): Observable<ISuccessResponse> {
-    return this.http.delete<ISuccessResponse>(`/v1/coupon?couponCode=${id}`, {});
+    return this.http.delete<ISuccessResponse>(
+      `/v1/coupon?couponCode=${id}`,
+      {}
+    );
   }
   getCheckoutCartItems(): Observable<IBillableCart> {
-     return this.http.get<IBillableCart>('/v1/checkoutCart');
+    return this.http.get<IBillableCart>('/v1/checkoutCart');
   }
 
   postProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
@@ -31,4 +34,23 @@ export class CartService {
       productId: item.productId,
     });
   }
+
+  initPaymentProcess(amt: number, cur: string) {
+    return this.http.post('/v1/initiatePayment', {
+      amount: amt,
+      currency : cur
+    });
+  }
+
+  validatePayment(data) {
+    return this.http.post('/v1/validatePayment', data);
+  }
+
+  get nativeWindow(): any {
+    return _window();
+  }
+}
+
+function _window(): any {
+  return window;
 }
