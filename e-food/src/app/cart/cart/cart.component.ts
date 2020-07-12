@@ -12,11 +12,16 @@ import { take, finalize } from 'rxjs/operators';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartData: any[];
+  cartData: any;
+  couponCode = '';
   userName: string;
   qtyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   loading = false;
-  constructor(public cartSvc: CartService, public auth: AuthService, public utilSvc: UtilService) {}
+  constructor(
+    public cartSvc: CartService,
+    public auth: AuthService,
+    public utilSvc: UtilService
+  ) {}
 
   ngOnInit() {
     this.prepareCart();
@@ -30,7 +35,12 @@ export class CartComponent implements OnInit {
       this.cartSvc.getCheckoutCartItems(),
       this.auth.getUserInfoFromToken(),
     ])
-      .pipe(take(1), finalize(() => {this.loading = false; }) )
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.loading = false;
+        })
+      )
       .subscribe((res) => {
         this.cartData = res[0];
         this.userName = res[1].fname;
@@ -38,10 +48,22 @@ export class CartComponent implements OnInit {
   }
 
   QtyChanged(item: ICartItem) {
-    this.cartSvc.postProductQtyForUser(item).subscribe(res => {
+    this.cartSvc.postProductQtyForUser(item).subscribe((res) => {
       this.utilSvc.showSnackBar(res.message);
       this.prepareCart();
     });
-    }
+  }
 
+  applyCoupon() {
+
+    this.cartSvc.applyCouponToCart(this.couponCode).subscribe(
+      (res) => {
+        console.log(res);
+      },
+        (err) => {
+          console.log(err);
+          this.utilSvc.showSnackBar(err);
+        }
+    );
+  }
 }

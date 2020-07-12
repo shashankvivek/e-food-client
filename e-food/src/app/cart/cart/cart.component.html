@@ -92,13 +92,24 @@
 <div>
   <mat-card>
     <div class="total">
-      <div class="sum">
-        <span class="strong">Total Price:</span> {{ cartData.currency }}.
-        {{ cartData.totalPrice }}
+      <div class="coupon-sec">
+        <mat-form-field appearance="standard" >
+          <mat-label>Coupon Code</mat-label>
+          <input [disabled]="cartData.couponId && cartData.couponId !== '' " matInput [(ngModel)]="cartData.couponId" type="text">
+          <mat-hint>Enter code here</mat-hint>
+        </mat-form-field>&nbsp;
+        <button *ngIf="cartData.couponId && cartData.couponId === '' " (click)="applyCoupon()" mat-raised-button color="primary">Apply</button>
+        <button *ngIf="cartData.couponId && cartData.couponId !== '' " (click)="applyCoupon()" mat-raised-button color="accent">Remove</button>
       </div>
       <div class="sum">
-        <span class="strong">Total Saving:</span> {{ cartData.currency }}.
-        {{ cartData.totalSaving }}
+        <div class="t-price">
+          <span class="strong">Total Price:</span> {{ cartData.currency }}.
+          {{ cartData.totalPrice }}
+        </div>
+        <div class="t-saving">
+          <span class="strong">Total Saving:</span> {{ cartData.currency }}.
+          {{ cartData.totalSaving }}
+        </div>
       </div>
     </div>
     <button mat-raised-button color="primary">Go To Payment</button>

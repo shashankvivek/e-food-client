@@ -5,12 +5,26 @@
 
 .total{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.coupon-sec{
+    flex-grow: 1;
+    text-align: left;
+    padding: 20px;
 }
 
 .sum{
-    text-align: right;
+    flex-grow: 1;
     padding: 5px;
+    > div { text-align: right;}
+    .t-saving{
+        padding: 5px;
+    }
+    .t-price{
+        font-size: 20px;
+        padding: 5px;
+    }
 }
 
 div {
