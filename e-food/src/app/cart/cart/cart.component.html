@@ -6,7 +6,9 @@
 </mat-toolbar>
 
 <div class="cart">
-  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="loading" class="spinner-board">
+    <mat-spinner class="spinner" ></mat-spinner>
+  </div>  
   <h2 mat-header>{{ userName }}'s Cart</h2>
   <mat-divider></mat-divider>
   <div class="row">
@@ -95,11 +97,13 @@
       <div class="coupon-sec">
         <mat-form-field appearance="standard" >
           <mat-label>Coupon Code</mat-label>
-          <input [disabled]="cartData.couponId && cartData.couponId !== '' " matInput [(ngModel)]="cartData.couponId" type="text">
+          <input [disabled]="couponActivated" 
+            matInput 
+            [(ngModel)]="cartData.couponId" type="text">
           <mat-hint>Enter code here</mat-hint>
         </mat-form-field>&nbsp;
-        <button *ngIf="cartData.couponId && cartData.couponId === '' " (click)="applyCoupon()" mat-raised-button color="primary">Apply</button>
-        <button *ngIf="cartData.couponId && cartData.couponId !== '' " (click)="applyCoupon()" mat-raised-button color="accent">Remove</button>
+        <button *ngIf="!couponActivated" (click)="applyCoupon()" mat-raised-button color="primary">Apply</button>
+        <button *ngIf="couponActivated" (click)="removeCoupon()" mat-raised-button color="accent">Remove</button>
       </div>
       <div class="sum">
         <div class="t-price">

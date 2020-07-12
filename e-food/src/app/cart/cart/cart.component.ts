@@ -1,3 +1,4 @@
+import { IBillableCart } from './../cart.model';
 import { UtilService } from 'src/app/shared-kernel/util.service';
 import { ICartItem } from './../../shared-kernel/shared.model';
 import { AuthService } from 'src/app/shared-kernel/auth.service';
@@ -12,8 +13,14 @@ import { take, finalize } from 'rxjs/operators';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartData: any;
-  couponCode = '';
+  cartData: IBillableCart = {
+    offerItems: [],
+    items: [],
+    currency: '',
+    totalPrice: 0,
+    totalSaving: 0,
+  };
+  couponActivated: boolean;
   userName: string;
   qtyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   loading = false;
@@ -43,6 +50,8 @@ export class CartComponent implements OnInit {
       )
       .subscribe((res) => {
         this.cartData = res[0];
+        this.cartData.couponId = this.cartData.couponId || '';
+        this.couponActivated = this.cartData.couponId.length > 0 ;
         this.userName = res[1].fname;
       });
   }
@@ -54,10 +63,12 @@ export class CartComponent implements OnInit {
     });
   }
 
-  applyCoupon() {
-
-    this.cartSvc.applyCouponToCart(this.couponCode).subscribe(
+  removeCoupon() {
+    this.cartSvc.removeCouponFromCart(this.cartData.couponId).subscribe(
       (res) => {
+        if (res.success) {
+          this.prepareCart();
+        }
         console.log(res);
       },
         (err) => {
@@ -65,5 +76,22 @@ export class CartComponent implements OnInit {
           this.utilSvc.showSnackBar(err);
         }
     );
+  }
+  applyCoupon() {
+    if (this.cartData.couponId !== '') {
+      this.cartSvc.applyCouponToCart(this.cartData.couponId).subscribe(
+        (res) => {
+          if (res.success) {
+            this.prepareCart();
+          }
+          console.log(res);
+        },
+          (err) => {
+            console.log(err.error);
+            this.utilSvc.showSnackBar(err.error);
+          }
+      );
+    }
+
   }
 }
