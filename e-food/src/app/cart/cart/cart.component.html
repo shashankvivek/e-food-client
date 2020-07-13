@@ -4,38 +4,84 @@
     <span>Back to shopping</span>
   </mat-toolbar-row>
 </mat-toolbar>
-
-<div class="cart">
-  <div *ngIf="loading" class="spinner-board">
-    <mat-spinner class="spinner" ></mat-spinner>
-  </div>  
-  <h2 mat-header>{{ userName }}'s Cart</h2>
-  <mat-divider></mat-divider>
-  <div class="row">
-    <div class="cell img-cell"></div>
-    <div class="cell name-cell"><h4 mat-line>Name</h4></div>
-    <div class="cell qty-cell">Quantity</div>
-    <div class="cell unit-cell">Total Price</div>
-  </div>
-  <mat-divider></mat-divider>
-  <ng-container *ngFor="let item of cartData.offerItems">
+<ng-template #empty>
+ <div class="empty">
+  <h2>Cart is empty</h2>
+ </div>
+</ng-template>
+<ng-container *ngIf="(cartData.items.length > 0 || cartData.offerItems.length > 0) ; else empty">
+  <div class="cart">
+    <div *ngIf="loading" class="spinner-board">
+      <mat-spinner class="spinner" ></mat-spinner>
+    </div>  
+    <h2 mat-header>{{ userName }}'s Cart</h2>
+    <mat-divider></mat-divider>
     <div class="row">
-      <div class="nested-row">
-        <div class="row" *ngFor="let ruleItem of item.items">
+      <div class="cell img-cell"></div>
+      <div class="cell name-cell"><h4 mat-line>Name</h4></div>
+      <div class="cell qty-cell">Quantity</div>
+      <div class="cell unit-cell">Total Price</div>
+    </div>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let item of cartData.offerItems">
+      <div class="row">
+        <div class="nested-row">
+          <div class="row" *ngFor="let ruleItem of item.items">
+            <div class="cell img-cell">
+              <img class="cart-img" alt="image" [src]="ruleItem.imageUrl" />
+            </div>
+            <div class="cell name-cell">
+              <h4 mat-line>{{ ruleItem.productName }}</h4>
+            </div>
+            <div class="cell qty-cell">
+              <mat-select
+                class="select-box"
+                (selectionChange)="QtyChanged(ruleItem)"
+                style="width: 120px;"
+                mat-line
+                placeholder="Select Quantity"
+                [(value)]="ruleItem.quantity"
+              >
+                <mat-option [value]="qty" *ngFor="let qty of qtyList">
+                  {{ qty }}
+                </mat-option>
+              </mat-select>
+            </div>
+            <div class="cell unit-cell">
+              {{ cartData.currency }}. {{ ruleItem.totalPrice }}
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="cell discount">
+            <span class="strong">Discount: </span>{{ item.discountPercent }}%
+          </div>
+          <div class="cell discount">
+            <span class="strong">Special Price:</span>
+            <span class="striked">
+              {{ cartData.currency }}.{{ item.actualPrice }}</span
+            >
+            {{ cartData.currency }}.{{ item.discountedPrice }}
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </ng-container>
+    <ng-container *ngFor="let item of cartData.items">
+      <div class="row">
           <div class="cell img-cell">
-            <img class="cart-img" alt="image" [src]="ruleItem.imageUrl" />
+            <img class="cart-img" alt="image" [src]="item.imageUrl" />
           </div>
           <div class="cell name-cell">
-            <h4 mat-line>{{ ruleItem.productName }}</h4>
+            <h4 mat-line>{{ item.productName }}</h4>
           </div>
           <div class="cell qty-cell">
             <mat-select
               class="select-box"
-              (selectionChange)="QtyChanged(ruleItem)"
+              (selectionChange)="QtyChanged(item)"
               style="width: 120px;"
               mat-line
               placeholder="Select Quantity"
-              [(value)]="ruleItem.quantity"
+              [(value)]="item.quantity"
             >
               <mat-option [value]="qty" *ngFor="let qty of qtyList">
                 {{ qty }}
@@ -43,83 +89,41 @@
             </mat-select>
           </div>
           <div class="cell unit-cell">
-            {{ cartData.currency }}. {{ ruleItem.totalPrice }}
+            {{ item.currency }}. {{ item.totalPrice }}
+          </div>
+        <mat-divider></mat-divider>
+      </div>
+    </ng-container>
+  </div>
+  
+  <div>
+    <mat-card>
+      <div class="total">
+        <div class="coupon-sec">
+          <mat-form-field appearance="standard" >
+            <mat-label>Coupon Code</mat-label>
+            <input [disabled]="couponActivated" 
+              matInput 
+              [(ngModel)]="cartData.couponId" type="text">
+            <mat-hint>Enter code here</mat-hint>
+          </mat-form-field>&nbsp;
+          <button *ngIf="!couponActivated" (click)="applyCoupon()" mat-raised-button color="primary">Apply</button>
+          <button *ngIf="couponActivated" (click)="removeCoupon()" mat-raised-button color="accent">Remove</button>
+        </div>
+        <div class="sum">
+          <div class="t-price">
+            <span class="strong">Total Price:</span> {{ cartData.currency }}.
+            {{ cartData.totalPrice }}
+          </div>
+          <div class="t-saving">
+            <span class="strong">Total Saving:</span> {{ cartData.currency }}.
+            {{ cartData.totalSaving }}
           </div>
         </div>
-        <mat-divider></mat-divider>
-        <div class="cell discount">
-          <span class="strong">Discount: </span>{{ item.discountPercent }}%
-        </div>
-        <div class="cell discount">
-          <span class="strong">Special Price:</span>
-          <span class="striked">
-            {{ cartData.currency }}.{{ item.actualPrice }}</span
-          >
-          {{ cartData.currency }}.{{ item.discountedPrice }}
-        </div>
       </div>
-    </div>
-    <mat-divider></mat-divider>
-  </ng-container>
-  <ng-container *ngFor="let item of cartData.items">
-    <div class="row">
-        <div class="cell img-cell">
-          <img class="cart-img" alt="image" [src]="item.imageUrl" />
-        </div>
-        <div class="cell name-cell">
-          <h4 mat-line>{{ item.productName }}</h4>
-        </div>
-        <div class="cell qty-cell">
-          <mat-select
-            class="select-box"
-            (selectionChange)="QtyChanged(item)"
-            style="width: 120px;"
-            mat-line
-            placeholder="Select Quantity"
-            [(value)]="item.quantity"
-          >
-            <mat-option [value]="qty" *ngFor="let qty of qtyList">
-              {{ qty }}
-            </mat-option>
-          </mat-select>
-        </div>
-        <div class="cell unit-cell">
-          {{ item.currency }}. {{ item.totalPrice }}
-        </div>
-      <mat-divider></mat-divider>
-    </div>
-  </ng-container>
-</div>
+      <button mat-raised-button color="primary" (click)="createRzpayOrder()">Go To Payment</button>
+    </mat-card>
+  </div>
+</ng-container>
 
-<div>
-  <mat-card>
-    <div class="total">
-      <div class="coupon-sec">
-        <mat-form-field appearance="standard" >
-          <mat-label>Coupon Code</mat-label>
-          <input [disabled]="couponActivated" 
-            matInput 
-            [(ngModel)]="cartData.couponId" type="text">
-          <mat-hint>Enter code here</mat-hint>
-        </mat-form-field>&nbsp;
-        <button *ngIf="!couponActivated" (click)="applyCoupon()" mat-raised-button color="primary">Apply</button>
-        <button *ngIf="couponActivated" (click)="removeCoupon()" mat-raised-button color="accent">Remove</button>
-      </div>
-      <div class="sum">
-        <div class="t-price">
-          <span class="strong">Total Price:</span> {{ cartData.currency }}.
-          {{ cartData.totalPrice }}
-        </div>
-        <div class="t-saving">
-          <span class="strong">Total Saving:</span> {{ cartData.currency }}.
-          {{ cartData.totalSaving }}
-        </div>
-      </div>
-    </div>
-    <button mat-raised-button color="primary" (click)="createRzpayOrder()">Go To Payment</button>
-  </mat-card>
-</div>
 
-<!-- <div class="example-button-row">
-  <button mat-raised-button color="primary">Send</button>
-</div> -->

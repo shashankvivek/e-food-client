@@ -7,6 +7,7 @@ import { SharedKernelModule } from '../shared-kernel/shared-kernel.module';
 
 const routes: Routes = [
   { path: ':id', component: OrderDetailsComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({

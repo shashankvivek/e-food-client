@@ -5,8 +5,8 @@ import { UtilService } from 'src/app/shared-kernel/util.service';
 import { ICartItem } from './../../shared-kernel/shared.model';
 import { AuthService } from 'src/app/shared-kernel/auth.service';
 import { CartService } from './../cart.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, combineLatest, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { forkJoin, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
 
 @Component({
@@ -15,6 +15,7 @@ import { take, finalize } from 'rxjs/operators';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
+
   cartData: IBillableCart = {
     offerItems: [],
     items: [],
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
     public auth: AuthService,
     public utilSvc: UtilService,
     public router: Router,
-    public headerSvc: HeaderService
+    public headerSvc: HeaderService,
+    public cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -57,8 +59,8 @@ export class CartComponent implements OnInit {
         this.cartData.couponId = this.cartData.couponId || '';
         this.couponActivated = this.cartData.couponId.length > 0;
         this.userName = res[1].fname;
-        this.cartData.totalSaving = this.cartData.totalSaving ||  0
-;      });
+        this.cartData.totalSaving = this.cartData.totalSaving || 0;
+      });
   }
 
   QtyChanged(item: ICartItem): void {
@@ -110,11 +112,6 @@ export class CartComponent implements OnInit {
         this.payWithRazor(res.id);
       });
   }
-
-  moveToOrderPage(id) {
-    this.router.navigate(['/order', id ]);
-  }
-
   private payWithRazor(val) {
     const options: any = {
       key: 'rzp_test_eEsrrirzQRWFdc',
@@ -140,9 +137,15 @@ export class CartComponent implements OnInit {
       this.cartSvc.validatePayment(response).subscribe((res) => {
         // move to order page as per the returned response
         this.headerSvc.resetCart();
-        console.log(res);
-        this.moveToOrderPage(res.message);
-
+        this.cartData = {
+          offerItems: [],
+          items: [],
+          currency: '',
+          totalPrice: 0,
+          totalSaving: 0,
+        };
+        this.router.navigate(['/order', res.message]);
+        this.cd.detectChanges();
       });
     };
     options.modal.ondismiss = () => {
