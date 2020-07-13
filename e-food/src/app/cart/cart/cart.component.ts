@@ -8,7 +8,6 @@ import { CartService } from './../cart.service';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { forkJoin, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
-import { totalmem } from 'os';
 
 @Component({
   selector: 'app-cart',
@@ -200,7 +199,9 @@ export class CartComponent implements OnInit {
           totalSaving: 0,
         };
         this.router.navigate(['/order', res.message]);
-        this.cd.detectChanges();
+        setTimeout(() => {
+          window.location.reload(); 
+        }, 1000);
       });
     };
     options.modal.ondismiss = () => {
