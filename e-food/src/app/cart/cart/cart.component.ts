@@ -66,9 +66,25 @@ export class CartComponent implements OnInit {
   }
 
   QtyChanged(item: ICartItem): void {
-    this.cartSvc.updateProductQtyForUser(item).subscribe((res) => {
-      this.utilSvc.showSnackBar(res.message);
-      this.prepareCart();
+    this.headerSvc.updateProductQty(item).subscribe(res => {
+      if (res.success) {
+        this.prepareCart();
+        this.utilSvc.showSnackBar('Quantity updated successfully');
+      } else {
+        this.utilSvc.showSnackBar('error updating quantity');
+      }
+    });
+  }
+
+  removeItemFromCart(item: ICartItem) {
+    this.headerSvc.removeItemFromCart(item.productId).subscribe(res => {
+      if (res.success) {
+        this.prepareCart();
+        this.utilSvc.showSnackBar('Item removed successfully');
+        this.prepareCart();
+      } else {
+        this.utilSvc.showSnackBar('error removing item');
+      }
     });
   }
 

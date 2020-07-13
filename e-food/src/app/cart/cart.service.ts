@@ -27,16 +27,17 @@ export class CartService {
       {}
     );
   }
+
   getCheckoutCartItems(): Observable<IBillableCart> {
     return this.http.get<IBillableCart>('/v1/checkoutCart');
   }
 
-  updateProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
-    return this.http.post<ICartSuccessResponse>('/v1/user/cart', {
-      totalQty: item.quantity,
-      productId: item.productId,
-    });
-  }
+  // updateProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
+  //   return this.http.post<ICartSuccessResponse>('/v1/user/cart', {
+  //     totalQty: item.quantity,
+  //     productId: item.productId,
+  //   });
+  // }
 
   initPaymentProcess(amt: number, cur: string): Observable<IPayment> {
     return this.http.post<IPayment>('/v1/initiatePayment', {
@@ -52,6 +53,7 @@ export class CartService {
   get nativeWindow(): any {
     return _window();
   }
+
 }
 
 function _window(): any {

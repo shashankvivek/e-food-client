@@ -1,3 +1,14 @@
+.cart-container{
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+}
+
+
+.board {
+    text-align: -webkit-center;
+}
 .cart {
     padding: 15px;
     border-bottom: 1px solid rgba(0,0,0,.12);
@@ -71,6 +82,11 @@ div {
 .img-cell {
     width: 10%;
     padding-top: 10px;
+}
+
+.del-cell{
+    width: 10%;
+    padding-top: 19px;
 }
 
 .name-cell {
