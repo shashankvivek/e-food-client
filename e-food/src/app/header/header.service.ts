@@ -1,5 +1,9 @@
 import { UtilService } from 'src/app/shared-kernel/util.service';
-import { ISuccessResponse, ICartItem } from './../shared-kernel/shared.model';
+import {
+  ISuccessResponse,
+  ICartItem,
+  ICartSuccessResponse,
+} from './../shared-kernel/shared.model';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { IProduct, IAddedToCartEvent } from './../products/product.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -20,7 +24,6 @@ export interface Category {
   subCategories: SubCategory[];
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class HeaderService {
   private cartItems$ = new BehaviorSubject<ICartItem[]>([]);
@@ -37,7 +40,7 @@ export class HeaderService {
   }
 
   getCartPreview() {
-    const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
+    const path = this.authSvc.tokenPayLoad.isCustomer ? 'user' : 'guest';
     return this.httpClient.get<ICartItem[]>(`/v1/${path}/cart`).pipe(
       switchMap((items) => {
         this.cartItems = items;
@@ -62,7 +65,7 @@ export class HeaderService {
       quantity: event.quantity,
       unitPrice: event.product.unitPrice,
       imageUrl: event.product.imageUrl,
-      currency: event.product.currency
+      currency: event.product.currency,
     };
     this.pushToCart(newItem);
   }
@@ -82,6 +85,14 @@ export class HeaderService {
     this.cartItems$.next(this.cartItems);
   }
 
+  private updateQtyInCart(productId: number, qty: number) {
+    const index = this.cartItems.findIndex(
+      (item) => item.productId === productId
+    );
+    this.cartItems[index].quantity = qty;
+    this.cartItems$.next(this.cartItems);
+  }
+
   addGuestSessionInfo(): void {
     this.httpClient
       .post('/v1/sessionInfo', {
@@ -96,7 +107,7 @@ export class HeaderService {
   }
 
   removeItemFromCart(productId: number): Observable<ISuccessResponse> {
-    const path = (this.authSvc.tokenPayLoad.isCustomer) ? 'user' : 'guest';
+    const path = this.authSvc.tokenPayLoad.isCustomer ? 'user' : 'guest';
     return this.httpClient
       .delete<ISuccessResponse>(`/v1/${path}/cart?productId=${productId}`)
       .pipe(
@@ -104,6 +115,20 @@ export class HeaderService {
           if (response.success) {
             this.removeFromCart(productId);
           }
+        })
+      );
+  }
+
+  updateProductQty(item: ICartItem): Observable<ICartSuccessResponse> {
+    const path = this.authSvc.tokenPayLoad.isCustomer ? 'user' : 'guest';
+    return this.httpClient
+      .post<ICartSuccessResponse>(`/v1/${path}/cart`, {
+        totalQty: item.quantity,
+        productId: item.productId,
+      })
+      .pipe(
+        tap((res) => {
+          this.updateQtyInCart(item.productId, res.qtyAdded);
         })
       );
   }

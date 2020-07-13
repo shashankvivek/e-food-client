@@ -31,7 +31,7 @@ export class CartService {
     return this.http.get<IBillableCart>('/v1/checkoutCart');
   }
 
-  postProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
+  updateProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
     return this.http.post<ICartSuccessResponse>('/v1/user/cart', {
       totalQty: item.quantity,
       productId: item.productId,

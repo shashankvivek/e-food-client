@@ -60,11 +60,13 @@ export class CartComponent implements OnInit {
         this.couponActivated = this.cartData.couponId.length > 0;
         this.userName = res[1].fname;
         this.cartData.totalSaving = this.cartData.totalSaving || 0;
+        this.cartData.items = ( this.cartData.items) || [];
+        this.cartData.offerItems = ( this.cartData.offerItems) || [];
       });
   }
 
   QtyChanged(item: ICartItem): void {
-    this.cartSvc.postProductQtyForUser(item).subscribe((res) => {
+    this.cartSvc.updateProductQtyForUser(item).subscribe((res) => {
       this.utilSvc.showSnackBar(res.message);
       this.prepareCart();
     });

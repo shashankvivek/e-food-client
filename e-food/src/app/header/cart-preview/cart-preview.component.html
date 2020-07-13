@@ -15,30 +15,69 @@
 
       <ng-container matColumnDef="quantity">
         <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.quantity }} </mat-cell>
+        <!-- <mat-cell *matCellDef="let element"> {{ element.quantity }} </mat-cell> -->
+        <mat-cell *matCellDef="let element">
+          <!-- <div class="qty"> -->
+            <mat-select
+            class="select-box qty"
+            (selectionChange)="QtyChanged(element)"
+            style="width: 120px;"
+            mat-line
+            placeholder="Select Quantity"
+            [(value)]="element.quantity"
+          >
+            <mat-option [value]="qty" *ngFor="let qty of qtyList">
+              {{ qty }}
+            </mat-option>
+          </mat-select>
+          <!-- </div> -->
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cost">
         <mat-header-cell *matHeaderCellDef> Cost </mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.currency}} {{ element.cost }} </mat-cell>
+        <mat-cell *matCellDef="let element"
+          >{{ element.currency }} {{ element.cost }}
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="remove">
         <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-          <button mat-button (click)="removeItem(element.productId)"><mat-icon>delete</mat-icon></button>
-         </mat-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-button (click)="removeItem(element.productId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="maxItemToShow" showFirstLastButtons></mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="maxItemToShow"
+      showFirstLastButtons
+    ></mat-paginator>
   </div>
 
   <div class="cart-footer" mat-dialog-actions>
     <button mat-raised-button (click)="closeCart()">Close</button>
-    <button mat-raised-button *ngIf="!isGuest" [disabled]="items.length < 1" (click)="goToCart()" color="accent">Go To Cart</button>
-    <button mat-raised-button *ngIf="isGuest" [disabled]="items.length < 1" (click)="login()" color="accent">Login to view cart</button>
+    <button
+      mat-raised-button
+      *ngIf="!isGuest"
+      [disabled]="items.length < 1"
+      (click)="goToCart()"
+      color="accent"
+    >
+      Go To Cart
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="isGuest"
+      [disabled]="items.length < 1"
+      (click)="login()"
+      color="accent"
+    >
+      Login to view cart
+    </button>
   </div>
 </div>

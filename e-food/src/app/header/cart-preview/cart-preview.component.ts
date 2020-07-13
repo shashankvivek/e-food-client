@@ -33,6 +33,7 @@ export class CartPreviewComponent implements OnInit {
   maxItemToShow = [6];
   items: ICartItem[] = [];
   isGuest: boolean;
+  qtyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   constructor(
     public headerSvc: HeaderService,
@@ -61,6 +62,16 @@ export class CartPreviewComponent implements OnInit {
         })
       );
       this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  QtyChanged(item: ICartItem) {
+    this.headerSvc.updateProductQty(item).subscribe(res => {
+      if (res.success) {
+        this.utilSvc.showSnackBar('Quantity updated successfully');
+      } else {
+        this.utilSvc.showSnackBar('error updating quantity');
+      }
     });
   }
 

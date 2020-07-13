@@ -1,25 +1,46 @@
 <mat-card class="prod-card mat-elevation-z8">
   <mat-card-header>
-    <mat-card-title>{{product.name}}</mat-card-title>
+    <mat-card-title>{{ product.name }}</mat-card-title>
   </mat-card-header>
-  <img
-    class="prod-img"
-    mat-card-image
-    src="{{product.imageUrl}}"
-    alt="Photo of red apple"
-  />
+  <div class="prod-img">
+    <img mat-card-image [src]="product.imageUrl" alt="image" />
+  </div>
+
   <mat-card-content>
     <!-- <p>
      {{product.description}}
     </p> -->
-    <p>{{product.currency}} {{product.unitPrice}} </p>
-    <mat-form-field appearance="standard" >
+    <p>{{ product.currency }} {{ product.unitPrice }}</p>
+    <mat-form-field appearance="standard">
       <mat-label>Quantity</mat-label>
-      <input [disabled]="product.isAddedToCart" matInput [(ngModel)]="quantity" type="number" min="0" max="12">
+      <input
+        [disabled]="product.isAddedToCart"
+        matInput
+        [(ngModel)]="quantity"
+        type="number"
+        min="0"
+        max="12"
+      />
       <mat-hint>Maximum 12 units</mat-hint>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="addToCart(product,quantity)"[disabled]="product.isAddedToCart"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addToCart(product, quantity)"
+      *ngIf="!product.isAddedToCart"
+    >
+      <mat-icon>add_shopping_cart</mat-icon>Add to Cart
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="product.isAddedToCart"
+      (click)="addToCart(product, quantity)"
+      [disabled]="product.isAddedToCart"
+    >
+      <mat-icon>done</mat-icon>Added to cart
+    </button>
   </mat-card-actions>
 </mat-card>
