@@ -10,6 +10,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+export interface IPayment {
+  id: string;
+}
 @Injectable()
 export class CartService {
   constructor(public http: HttpClient) {}
@@ -35,15 +38,15 @@ export class CartService {
     });
   }
 
-  initPaymentProcess(amt: number, cur: string) {
-    return this.http.post('/v1/initiatePayment', {
+  initPaymentProcess(amt: number, cur: string): Observable<IPayment> {
+    return this.http.post<IPayment>('/v1/initiatePayment', {
       amount: amt,
       currency : cur
     });
   }
 
-  validatePayment(data) {
-    return this.http.post('/v1/validatePayment', data);
+  validatePayment(data): Observable<ISuccessResponse> {
+    return this.http.post<ISuccessResponse>('/v1/validatePayment', data);
   }
 
   get nativeWindow(): any {

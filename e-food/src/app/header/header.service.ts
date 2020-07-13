@@ -51,6 +51,10 @@ export class HeaderService {
     return this.cartItems$.asObservable();
   }
 
+  resetCart() {
+    this.cartItems$.next([]);
+  }
+
   updateCart(event: IAddedToCartEvent): void {
     const newItem: ICartItem = {
       productId: event.product.productId,

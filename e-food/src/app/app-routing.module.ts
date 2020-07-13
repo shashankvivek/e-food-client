@@ -20,8 +20,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'cart',
-    loadChildren: () => import('./cart/cart.module').then((c) => c.CartModule),
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then((c) => c.OrderModule),
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/home' },

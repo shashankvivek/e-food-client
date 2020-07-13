@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { HeaderService } from './../../header/header.service';
 import { IBillableCart } from './../cart.model';
 import { UtilService } from 'src/app/shared-kernel/util.service';
 import { ICartItem } from './../../shared-kernel/shared.model';
@@ -27,14 +29,16 @@ export class CartComponent implements OnInit {
   constructor(
     public cartSvc: CartService,
     public auth: AuthService,
-    public utilSvc: UtilService
+    public utilSvc: UtilService,
+    public router: Router,
+    public headerSvc: HeaderService
   ) {}
 
   ngOnInit() {
     this.prepareCart();
   }
 
-  prepareCart() {
+  prepareCart(): void {
     this.loading = true;
     // not using forkJoin as there is a bug in the auth0/angular2-jwt library which I used
     // to save time
@@ -53,17 +57,18 @@ export class CartComponent implements OnInit {
         this.cartData.couponId = this.cartData.couponId || '';
         this.couponActivated = this.cartData.couponId.length > 0;
         this.userName = res[1].fname;
-      });
+        this.cartData.totalSaving = this.cartData.totalSaving ||  0
+;      });
   }
 
-  QtyChanged(item: ICartItem) {
+  QtyChanged(item: ICartItem): void {
     this.cartSvc.postProductQtyForUser(item).subscribe((res) => {
       this.utilSvc.showSnackBar(res.message);
       this.prepareCart();
     });
   }
 
-  removeCoupon() {
+  removeCoupon(): void {
     this.cartSvc.removeCouponFromCart(this.cartData.couponId).subscribe(
       (res) => {
         if (res.success) {
@@ -77,7 +82,7 @@ export class CartComponent implements OnInit {
       }
     );
   }
-  applyCoupon() {
+  applyCoupon(): void {
     if (this.cartData.couponId !== '') {
       this.cartSvc.applyCouponToCart(this.cartData.couponId).subscribe(
         (res) => {
@@ -106,7 +111,11 @@ export class CartComponent implements OnInit {
       });
   }
 
-  payWithRazor(val) {
+  moveToOrderPage(id) {
+    this.router.navigate(['/order', id ]);
+  }
+
+  private payWithRazor(val) {
     const options: any = {
       key: 'rzp_test_eEsrrirzQRWFdc',
       amount: this.cartData.totalPrice * 100, // amount should be in paise format to display Rs 1255 without decimal point
@@ -130,7 +139,10 @@ export class CartComponent implements OnInit {
       options.response = response;
       this.cartSvc.validatePayment(response).subscribe((res) => {
         // move to order page as per the returned response
+        this.headerSvc.resetCart();
         console.log(res);
+        this.moveToOrderPage(res.message);
+
       });
     };
     options.modal.ondismiss = () => {
