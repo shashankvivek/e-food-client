@@ -36,7 +36,7 @@
             <div class="nested-row">
               <div class="row" *ngFor="let ruleItem of item.items">
                 <div class="cell del-cell">
-                    <button mat-raised-button color="accent" (click)="removeItemFromCart(ruleItem)"><mat-icon>delete</mat-icon></button>
+                    <button mat-icon-button color="accent" (click)="removeItemFromCart(ruleItem)"><mat-icon>delete</mat-icon></button>
                 </div>
                 <div class="cell img-cell">
                   <img class="cart-img" alt="image" [src]="ruleItem.imageUrl" />
@@ -80,7 +80,7 @@
         <ng-container *ngFor="let item of cartData.items">
           <div class="row">
             <div class="cell del-cell">
-              <button mat-raised-button color="accent" (click)="removeItemFromCart(item)"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button color="accent" (click)="removeItemFromCart(item)"><mat-icon>delete</mat-icon></button>
           </div>
             <div class="cell img-cell">
               <img class="cart-img" alt="image" [src]="item.imageUrl" />

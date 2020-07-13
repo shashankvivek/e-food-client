@@ -8,6 +8,7 @@ import { CartService } from './../cart.service';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { forkJoin, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
+import { totalmem } from 'os';
 
 @Component({
   selector: 'app-cart',
@@ -66,7 +67,7 @@ export class CartComponent implements OnInit {
   }
 
   QtyChanged(item: ICartItem): void {
-    this.headerSvc.updateProductQty(item).subscribe(res => {
+    this.cartSvc.updateProductQtyForUser(item, item.quantity).subscribe(res => {
       if (res.success) {
         this.prepareCart();
         this.utilSvc.showSnackBar('Quantity updated successfully');
@@ -77,15 +78,51 @@ export class CartComponent implements OnInit {
   }
 
   removeItemFromCart(item: ICartItem) {
-    this.headerSvc.removeItemFromCart(item.productId).subscribe(res => {
-      if (res.success) {
-        this.prepareCart();
-        this.utilSvc.showSnackBar('Item removed successfully');
-        this.prepareCart();
+      // if total qty of item is  == item.qunatity , then del from cart
+      const totalQtyInCart = this.getTotalQtyOfItem(item.productId);
+      if (item.quantity === totalQtyInCart) {
+        this.headerSvc.removeItemFromCart(item.productId).subscribe(res => {
+          if (res.success) {
+            this.prepareCart();
+            this.utilSvc.showSnackBar('Item removed successfully');
+            this.prepareCart();
+          } else {
+            this.utilSvc.showSnackBar('error removing item');
+          }
+        });
       } else {
-        this.utilSvc.showSnackBar('error removing item');
+        // just update with remaining qty
+        const reducedQty = totalQtyInCart - item.quantity;
+        this.cartSvc.updateProductQtyForUser(item, reducedQty).subscribe(res => {
+          if (res.success) {
+            this.prepareCart();
+            this.utilSvc.showSnackBar('Quantity updated successfully');
+          } else {
+            this.utilSvc.showSnackBar('error updating quantity');
+          }
+        });
       }
+
+
+      // else update with remaining qty
+
+
+  }
+
+  private getTotalQtyOfItem(productId: number): number {
+    let totalQty = 0;
+    const inItems = this.cartData.items.find(item => item.productId === productId);
+    totalQty = inItems.quantity;
+    console.log('in items:' + totalQty);
+
+    this.cartData.offerItems.forEach(ruleGroup => {
+      ruleGroup.items.forEach(item => {
+        if (item.productId === productId) {
+          totalQty = totalQty + item.quantity;
+        }
+      });
     });
+    return totalQty;
   }
 
   removeCoupon(): void {

@@ -32,17 +32,23 @@ export class CartService {
     return this.http.get<IBillableCart>('/v1/checkoutCart');
   }
 
-  // updateProductQtyForUser(item: ICartItem): Observable<ICartSuccessResponse> {
-  //   return this.http.post<ICartSuccessResponse>('/v1/user/cart', {
-  //     totalQty: item.quantity,
-  //     productId: item.productId,
-  //   });
-  // }
+  updateProductQtyForUser(item: ICartItem, qty: number): Observable<ICartSuccessResponse> {
+    return this.http.post<ICartSuccessResponse>('/v1/user/cart', {
+      totalQty: qty,
+      productId: item.productId,
+    });
+  }
+
+  removeItemFromCart(productId: number): Observable<ISuccessResponse> {
+    return this.http.delete<ISuccessResponse>(
+      `/v1/user/cart?productId=${productId}`
+    );
+  }
 
   initPaymentProcess(amt: number, cur: string): Observable<IPayment> {
     return this.http.post<IPayment>('/v1/initiatePayment', {
       amount: amt,
-      currency : cur
+      currency: cur,
     });
   }
 
@@ -53,7 +59,6 @@ export class CartService {
   get nativeWindow(): any {
     return _window();
   }
-
 }
 
 function _window(): any {
