@@ -1,4 +1,6 @@
 create interceptor to switch between local and hosted services
 put spinner
 inform user about 3rd party cookie
+check and remove all oberservables
 user HTTP-only cookie for storing access_token for better security
+qty update in case of sets of cart item for cart checkout should be clear (just like delete has been handled)
