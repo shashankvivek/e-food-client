@@ -22,6 +22,10 @@
       <span class="user-info">Welcome, {{userInfo.fname}}</span>
       <button mat-button (click)="logout()">Sign out</button>
     </span>
+
+    <span *ngIf="userInfo && !userInfo.isCustomer">
+      <button mat-button [routerLink]="['/guest/register']">Sign Up</button>  
+    </span>
   
     <span *ngIf="userInfo && !userInfo.isCustomer">
       <button mat-button [routerLink]="['/guest/login']">Login</button>  

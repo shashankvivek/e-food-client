@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
         (res) => {
           if (res.success) {
             this.utilSvc.showSnackBar('User Registered successfully');
-            this.router.navigate(['../login']);
+            this.router.navigate(['/user/login']);
           } else {
             this.utilSvc.showSnackBar(res.message);
           }
